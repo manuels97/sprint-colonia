@@ -8,7 +8,6 @@ interface Punto {
   title: string;
   text: string;
   tone: Tone;
-  featured?: boolean;
 }
 
 // Los 13 puntos de venta, en el orden de prioridad del cliente.
@@ -20,7 +19,6 @@ const puntos: Punto[] = [
     title: 'Predio exclusivo y controlado',
     text: 'No lo compartimos con otras colonias ni con socios de ningún club. Solo nuestros chicos y nuestro equipo.',
     tone: 'sun',
-    featured: true,
   },
   { icon: 'stethoscope', title: 'Servicio médico permanente', text: 'Personal médico presente durante toda la jornada.', tone: 'sky' },
   { icon: 'users', title: 'Grupos reducidos', text: 'Grupos chicos por edad, para que cada chico tenga atención personalizada.', tone: 'grass' },
@@ -50,7 +48,7 @@ const puntos: Punto[] = [
       {
         puntos.map((p, i) => (
           <li
-            class:list={['card', { 'card--featured': p.featured }]}
+            class="card card--punto"
             data-reveal
             style={`--reveal-delay: ${(i % 4) * 60}ms`}
           >
@@ -98,7 +96,12 @@ const puntos: Punto[] = [
     border-radius: var(--radius);
     background: var(--color-cream);
     border: 1px solid var(--color-border);
-    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+    transition:
+      transform 0.25s var(--ease-out),
+      box-shadow 0.25s var(--ease-out),
+      background-color 0.25s var(--ease-out),
+      border-color 0.25s var(--ease-out),
+      color 0.25s var(--ease-out);
   }
   .card:hover {
     transform: translateY(-4px);
@@ -117,15 +120,15 @@ const puntos: Punto[] = [
     color: var(--color-text-muted);
   }
 
-  /* Seguridad: mensaje insignia */
-  .card--featured {
+  /* Al pasar el mouse, cada punto se pinta de azul */
+  .card--punto:hover {
     background: var(--color-sky-dark);
     border-color: var(--color-sky-dark);
     color: var(--color-white);
-    box-shadow: var(--shadow);
   }
-  .card--featured .card__text { color: rgb(255 255 255 / 0.88); }
-  .card--featured .icon-tile { --tile-bg: var(--color-sun); --tile-fg: var(--color-night); }
+  .card--punto .card__text { transition: color 0.25s var(--ease-out); }
+  .card--punto:hover .card__text { color: rgb(255 255 255 / 0.88); }
+  .card--punto:hover .icon-tile { --tile-bg: var(--color-sun); --tile-fg: var(--color-night); }
 
   .card--cta {
     justify-content: center;
