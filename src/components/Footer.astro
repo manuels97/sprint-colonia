@@ -1,0 +1,152 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import Placeholder from './Placeholder.astro';
+import { NAV_LINKS, SITE, waLink } from '../config/site';
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <Logo variant="dark" />
+      <p>42 años cuidando el verano de los chicos en un predio propio, seguro y exclusivo, en Núñez.</p>
+      <ul class="social" role="list">
+        <li>
+          <a href={SITE.social.instagram} target="_blank" rel="noopener" aria-label="Instagram de Sprint Colonia">
+            <Icon name="instagram" />
+          </a>
+        </li>
+        <li>
+          <a href={SITE.social.facebook} target="_blank" rel="noopener" aria-label="Facebook de Sprint Colonia">
+            <Icon name="facebook" />
+          </a>
+        </li>
+        <li>
+          <a href={waLink()} target="_blank" rel="noopener" aria-label="WhatsApp de Sprint Colonia">
+            <Icon name="whatsapp" />
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <nav class="footer__col" aria-label="Secciones">
+      <h2 class="footer__heading">Secciones</h2>
+      <ul role="list">
+        {
+          NAV_LINKS.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="footer__col">
+      <h2 class="footer__heading">Contacto</h2>
+      <ul role="list" class="contact-list">
+        <li>
+          <Icon name="whatsapp" size={18} />
+          <a href={waLink()} target="_blank" rel="noopener">
+            {SITE.whatsappNumber ? `+${SITE.whatsappNumber}` : 'WhatsApp'}
+          </a>
+          {!SITE.whatsappNumber && <Placeholder label="número" />}
+        </li>
+        <li>
+          <Icon name="map-pin" size={18} />
+          <span>
+            {SITE.address.street ?? `${SITE.address.locality}, ${SITE.address.region}`}
+          </span>
+          {!SITE.address.street && <Placeholder label="dirección" />}
+        </li>
+        <li>
+          <Icon name="instagram" size={18} />
+          <a href={SITE.social.instagram} target="_blank" rel="noopener">@coloniasprint</a>
+        </li>
+        <li>
+          <Icon name="facebook" size={18} />
+          <a href={SITE.social.facebook} target="_blank" rel="noopener">/sprintcolonia</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© 2026 {SITE.name}. Todos los derechos reservados.</p>
+    <p class="footer__disclaimer">
+      Sitio de demostración: los testimonios y los precios son ilustrativos.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: clamp(3.5rem, 7vw, 5rem) 0 2rem;
+    background: var(--color-night);
+    color: rgb(255 255 255 / 0.78);
+    font-size: 0.97rem;
+  }
+
+  .footer__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 800px) {
+    .footer__grid { grid-template-columns: 1.4fr 1fr 1.2fr; }
+  }
+
+  .footer__brand p { margin: 1rem 0 1.25rem; max-width: 30rem; }
+
+  .social {
+    display: flex;
+    gap: 0.6rem;
+  }
+  .social a {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgb(255 255 255 / 0.08);
+    color: var(--color-white);
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .social a:hover { background: var(--color-sun); color: var(--color-night); }
+
+  .footer__heading {
+    margin-bottom: 1rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+    color: var(--color-white);
+  }
+
+  .footer__col ul { display: grid; gap: 0.55rem; }
+  .footer__col a {
+    color: rgb(255 255 255 / 0.85);
+    text-decoration: none;
+  }
+  .footer__col a:hover { color: var(--color-sun); text-decoration: underline; }
+
+  .contact-list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .contact-list :global(svg) { color: var(--color-sun); flex-shrink: 0; }
+  .contact-list :global(.todo) { color: var(--color-sun); }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    font-size: 0.88rem;
+  }
+  .footer__disclaimer { color: rgb(255 255 255 / 0.65); }
+</style>

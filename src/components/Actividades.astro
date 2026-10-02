@@ -1,0 +1,156 @@
+---
+import { Image } from 'astro:assets';
+import Icon, { type IconName } from './Icon.astro';
+import deportesImg from '../assets/images/camino-canchas.png';
+import talleresImg from '../assets/images/sede.png';
+import otrasImg from '../assets/images/espacio-voley.png';
+import naturalezaImg from '../assets/images/predio-verde.png';
+
+const categorias: {
+  title: string;
+  icon: IconName;
+  tone: 'sky' | 'grass' | 'sun' | 'red';
+  img: ImageMetadata;
+  alt: string;
+  items: string[];
+}[] = [
+  {
+    title: 'Deportes',
+    icon: 'trophy',
+    tone: 'sky',
+    img: deportesImg,
+    alt: 'Chicos caminando hacia las canchas de rugby del predio',
+    items: ['Natación', 'Fútbol', 'Rugby', 'Hockey', 'Softbol'],
+  },
+  {
+    title: 'Talleres',
+    icon: 'palette',
+    tone: 'sun',
+    img: talleresImg,
+    alt: 'Edificio de ladrillo de la sede, con ventanales y un toldo azul en la entrada',
+    items: ['Plástica', 'Dibujo', 'Pintura', 'Teatro', 'Música'],
+  },
+  {
+    title: 'Otras actividades',
+    icon: 'sparkles',
+    tone: 'red',
+    img: otrasImg,
+    alt: 'Espacio de pasto con red de vóley y árboles altos',
+    items: ['Tela', 'Gimnasia artística', 'Yoga'],
+  },
+  {
+    title: 'Vida en la naturaleza',
+    icon: 'flame',
+    tone: 'grass',
+    img: naturalezaImg,
+    alt: 'Cancha de pasto rodeada de árboles en el predio',
+    items: ['Fogones', 'Trekking'],
+  },
+];
+---
+
+<section id="actividades" class="section section--sky" aria-labelledby="actividades-title">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow">Actividades</p>
+      <h2 id="actividades-title" class="section-title">Todo lo que hacen en Sprint Colonia</h2>
+      <p class="section-lead">
+        Cada día combina deporte, arte y aire libre, con profesores especializados en cada área y propuestas adaptadas a
+        cada edad.
+      </p>
+    </div>
+
+    <ul class="act-grid" role="list">
+      {
+        categorias.map((c, i) => (
+          <li class="act" data-reveal style={`--reveal-delay: ${i * 80}ms`}>
+            <div class="act__media">
+              <Image
+                src={c.img}
+                alt={c.alt}
+                widths={[360, c.img.width]}
+                sizes="(min-width: 1100px) 285px, (min-width: 640px) 50vw, 100vw"
+                quality={75}
+                loading="lazy"
+              />
+            </div>
+            <div class="act__body">
+              <span class:list={['icon-tile', 'act__icon', c.tone !== 'sky' && `icon-tile--${c.tone}`]}>
+                <Icon name={c.icon} />
+              </span>
+              <h3 class="act__title">{c.title}</h3>
+              <ul class="act__items" role="list">
+                {c.items.map((item) => (
+                  <li class="chip">{item}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .act-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .act-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1100px) {
+    .act-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .act {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  }
+  .act:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+  .act__media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-sky-soft);
+  }
+  .act__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .act__body {
+    position: relative;
+    padding: 2.4rem 1.4rem 1.6rem;
+  }
+  .act__icon {
+    position: absolute;
+    top: -26px;
+    left: 1.4rem;
+    border: 4px solid var(--color-white);
+    box-sizing: content-box;
+  }
+  .act__title {
+    margin-bottom: 0.9rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.85rem;
+    letter-spacing: 0.02em;
+  }
+  .act__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .act__items .chip {
+    background: var(--color-cream);
+    font-size: 0.88rem;
+  }
+</style>

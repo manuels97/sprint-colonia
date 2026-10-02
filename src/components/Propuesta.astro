@@ -1,0 +1,160 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import { waLink } from '../config/site';
+
+type Tone = 'sky' | 'grass' | 'sun';
+interface Punto {
+  icon: IconName;
+  title: string;
+  text: string;
+  tone: Tone;
+  featured?: boolean;
+}
+
+// Los 13 puntos de venta, en el orden de prioridad del cliente.
+const puntos: Punto[] = [
+  { icon: 'map-pin', title: 'A un paso de todo', text: 'Estamos en Núñez, a minutos de Belgrano, Vicente López y Olivos.', tone: 'sky' },
+  { icon: 'tree', title: 'Mucho verde', text: 'Un predio amplio al aire libre para correr, jugar y disfrutar del sol.', tone: 'grass' },
+  {
+    icon: 'shield',
+    title: 'Predio exclusivo y controlado',
+    text: 'No lo compartimos con otras colonias ni con socios de ningún club. Solo nuestros chicos y nuestro equipo.',
+    tone: 'sun',
+    featured: true,
+  },
+  { icon: 'stethoscope', title: 'Servicio médico permanente', text: 'Personal médico presente durante toda la jornada.', tone: 'sky' },
+  { icon: 'users', title: 'Grupos reducidos', text: 'Grupos chicos por edad, para que cada chico tenga atención personalizada.', tone: 'grass' },
+  { icon: 'waves', title: '3 piletas', text: 'Una pileta para cada etapa, adecuada a la edad de cada grupo.', tone: 'sky' },
+  { icon: 'lifebuoy', title: 'Guardavidas', text: 'Guardavidas permanentes en cada pileta, siempre atentos.', tone: 'sun' },
+  { icon: 'bus', title: 'Transporte puerta a puerta', text: 'Te los buscamos por casa o por paradas fijas, con unidades habilitadas.', tone: 'grass' },
+  { icon: 'sun', title: 'Turno completo', text: 'Todo el día en la colonia, con almuerzo y merienda.', tone: 'sun' },
+  { icon: 'sunrise', title: 'Turno mañana o tarde', text: 'Medio día, a elección, según la rutina de tu familia.', tone: 'sky' },
+  { icon: 'alarm', title: 'Servicio de pre-hora', text: 'Para las familias que necesitan dejarlos más temprano.', tone: 'grass' },
+  { icon: 'utensils', title: 'Almuerzo y merienda', text: 'Comen en el predio, para que no tengas que preocuparte por nada.', tone: 'sun' },
+  { icon: 'calendar', title: 'Packs a tu medida', text: 'Semanales, quincenales, mensuales o por toda la temporada.', tone: 'sky' },
+];
+---
+
+<section id="propuesta" class="section section--white" aria-labelledby="propuesta-title">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow">Nuestra propuesta</p>
+      <h2 id="propuesta-title" class="section-title">Por qué elegir Sprint Colonia</h2>
+      <p class="section-lead">
+        Todo lo que una familia necesita para que el verano sea, a la vez, la mejor experiencia para los chicos y la más
+        tranquila para los grandes.
+      </p>
+    </div>
+
+    <ul class="grid" role="list">
+      {
+        puntos.map((p, i) => (
+          <li
+            class:list={['card', { 'card--featured': p.featured }]}
+            data-reveal
+            style={`--reveal-delay: ${(i % 4) * 60}ms`}
+          >
+            <span class:list={['icon-tile', p.tone !== 'sky' && `icon-tile--${p.tone}`]}>
+              <Icon name={p.icon} />
+            </span>
+            <h3 class="card__title">{p.title}</h3>
+            <p class="card__text">{p.text}</p>
+          </li>
+        ))
+      }
+      <li class="card card--cta" data-reveal>
+        <h3 class="card__title">¿Querés conocer el predio?</h3>
+        <p class="card__text">Escribinos y coordinamos una visita o te pasamos toda la info de la temporada.</p>
+        <a class="btn btn--sun" href={waLink('Hola, quiero conocer el predio de Sprint Colonia')} target="_blank" rel="noopener">
+          <Icon name="whatsapp" /> Escribinos
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  }
+  @media (min-width: 960px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+    .card--cta { grid-column: span 2; }
+  }
+  @media (min-width: 1200px) {
+    .grid { grid-template-columns: repeat(4, 1fr); }
+    .card--cta { grid-column: span 3; }
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+  }
+  .card .icon-tile { margin-bottom: 0.6rem; }
+
+  .card__title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+  .card__text {
+    font-size: 0.97rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+  }
+
+  /* Seguridad: mensaje insignia */
+  .card--featured {
+    background: var(--color-sky-dark);
+    border-color: var(--color-sky-dark);
+    color: var(--color-white);
+    box-shadow: var(--shadow);
+  }
+  .card--featured .card__text { color: rgb(255 255 255 / 0.88); }
+  .card--featured .icon-tile { --tile-bg: var(--color-sun); --tile-fg: var(--color-night); }
+
+  .card--cta {
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.6rem;
+    position: relative;
+    overflow: hidden;
+    background: var(--color-grass-dark);
+    border-color: var(--color-grass-dark);
+    color: var(--color-white);
+  }
+  .card--cta::after {
+    content: '';
+    position: absolute;
+    right: -50px;
+    bottom: -70px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: var(--color-sun);
+    opacity: 0.9;
+  }
+  .card--cta > * { position: relative; z-index: 1; }
+  .card--cta .card__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 2rem;
+    letter-spacing: 0.02em;
+  }
+  .card--cta .card__text { color: rgb(255 255 255 / 0.9); max-width: 30rem; }
+  .card--cta .btn { margin-top: 0.5rem; }
+</style>

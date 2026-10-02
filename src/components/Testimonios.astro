@@ -1,0 +1,154 @@
+---
+import Icon from './Icon.astro';
+
+// Testimonios de ejemplo para la demo — reemplazar por reseñas reales de familias.
+const testimonios = [
+  {
+    name: 'Laura M.',
+    rel: 'Mamá de Tomás (7) y Sofi (10)',
+    text: 'Lo que más valoro es que el predio sea solo de la colonia. Los chicos vuelven agotados y felices, y yo trabajo tranquila sabiendo que están cuidados.',
+  },
+  {
+    name: 'Martín R.',
+    rel: 'Papá de Joaquín (5)',
+    text: 'Era su primera colonia y le tenía miedo al agua. Con un grupo chico y profes súper pacientes, terminó el verano tirándose de cabeza a la pileta.',
+  },
+  {
+    name: 'Carolina G.',
+    rel: 'Mamá de Valentina (9)',
+    text: 'El transporte puerta a puerta nos resolvió el verano. Puntuales, atentos, y siempre nos avisaban ante cualquier cosa.',
+  },
+  {
+    name: 'Diego F.',
+    rel: 'Papá de Mateo (11) y Lucía (8)',
+    text: 'Fui a esta colonia de chico y ahora van mis hijos. Que después de tantos años mantenga el mismo cuidado dice mucho.',
+  },
+];
+---
+
+<section id="testimonios" class="section section--sand" aria-labelledby="testimonios-title">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow">Testimonios</p>
+      <h2 id="testimonios-title" class="section-title">Lo que dicen las familias</h2>
+      <p class="demo-note">Testimonios de ejemplo para la demo — se reemplazarán por reseñas reales.</p>
+    </div>
+
+    <ul class="testimonios" role="list" tabindex="0" aria-label="Testimonios de familias (deslizá para ver más)">
+      {
+        testimonios.map((t, i) => (
+          <li class="testimonio" data-reveal style={`--reveal-delay: ${i * 80}ms`}>
+            <figure>
+              <span class="testimonio__quote" aria-hidden="true">
+                <Icon name="quote" size={22} />
+              </span>
+              <blockquote>
+                <p>{t.text}</p>
+              </blockquote>
+              <figcaption>
+                <span class="avatar" aria-hidden="true">
+                  {t.name.charAt(0)}
+                </span>
+                <span>
+                  <strong>{t.name}</strong>
+                  <span class="testimonio__rel">{t.rel}</span>
+                </span>
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .demo-note {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.7);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+  }
+
+  /* Mobile: carrusel con scroll-snap (sin JS). Desktop: grilla. */
+  .testimonios {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(85%, 340px);
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0.5rem var(--gutter) 1.25rem;
+    margin-inline: calc(var(--gutter) * -1);
+    scrollbar-width: thin;
+    border-radius: var(--radius);
+  }
+  .testimonio { scroll-snap-align: center; }
+
+  @media (min-width: 1000px) {
+    .testimonios {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(4, 1fr);
+      overflow: visible;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .testimonio figure {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.75rem 1.5rem 1.5rem;
+    border-radius: var(--radius);
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+  }
+  .testimonio__quote {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 1rem;
+    border-radius: 14px;
+    background: var(--color-sun-soft);
+    color: #B26F00;
+  }
+  .testimonio blockquote {
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .testimonio figcaption {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+    line-height: 1.3;
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-sky-soft);
+    color: var(--color-sky-dark);
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    padding-top: 2px;
+  }
+  .testimonio:nth-child(2n) .avatar { background: var(--color-grass-soft); color: var(--color-grass-dark); }
+  .testimonio__rel {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+  }
+</style>

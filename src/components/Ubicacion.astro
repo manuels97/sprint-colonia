@@ -1,0 +1,118 @@
+---
+import Icon from './Icon.astro';
+import Placeholder from './Placeholder.astro';
+import { SITE, waLink } from '../config/site';
+
+const barrios = ['Núñez', 'Belgrano', 'Vicente López', 'Olivos'];
+const mapQuery = SITE.address.street ? `${SITE.address.street}, ${SITE.address.locality}` : SITE.mapQuery;
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=14&output=embed`;
+---
+
+<section id="ubicacion" class="section" aria-labelledby="ubicacion-title">
+  <div class="container ubicacion">
+    <div class="ubicacion__info" data-reveal="left">
+      <p class="eyebrow">Ubicación</p>
+      <h2 id="ubicacion-title" class="section-title">Dónde estamos</h2>
+      <p class="section-lead">
+        A minutos de Belgrano, Núñez, Vicente López y Olivos. Cerca de casa, para que el verano empiece sin viajes
+        largos.
+      </p>
+
+      <div class="address">
+        <span class="icon-tile"><Icon name="map-pin" /></span>
+        <div>
+          <p class="address__label">Dirección del predio</p>
+          <p class="address__value">
+            {
+              SITE.address.street ? (
+                `${SITE.address.street}, ${SITE.address.locality}, ${SITE.address.region}`
+              ) : (
+                <>
+                  {SITE.address.locality}, {SITE.address.region} <Placeholder label="dirección" />
+                </>
+              )
+            }
+          </p>
+        </div>
+      </div>
+
+      <ul class="barrios" role="list" aria-label="Barrios cercanos">
+        {
+          barrios.map((b) => (
+            <li class="chip">
+              <Icon name="map-pin" size={15} /> {b}
+            </li>
+          ))
+        }
+      </ul>
+
+      <a class="btn btn--outline" href={waLink('Hola, ¿me pasan la dirección del predio de Sprint Colonia?')} target="_blank" rel="noopener">
+        Pedí la dirección por WhatsApp <Icon name="arrow-right" />
+      </a>
+    </div>
+
+    <div class="map" data-reveal="right">
+      <iframe
+        src={mapSrc}
+        title="Mapa de la zona de Núñez, Buenos Aires"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ubicacion {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .ubicacion { grid-template-columns: 0.85fr 1.15fr; }
+  }
+
+  .address {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 1.1rem 1.25rem;
+    border-radius: var(--radius);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+  }
+  .address__label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .address__value {
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+  .address__value :global(.todo) { color: #8A5A00; margin-left: 0.25rem; }
+
+  .barrios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.25rem 0 1.75rem;
+  }
+  .barrios :global(svg) { color: var(--color-grass-dark); }
+
+  .map {
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    background: var(--color-sky-soft);
+    box-shadow: var(--shadow);
+  }
+  .map iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

@@ -1,0 +1,126 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+import { SITE, waLink } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = SITE.metaTitle, description = SITE.metaDescription } = Astro.props;
+
+const site = Astro.site ?? new URL(SITE.url);
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL('/og-image.jpg', site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsActivityLocation',
+  '@id': `${site.href}#colonia`,
+  name: SITE.name,
+  description,
+  slogan: '42 años cuidando el verano de tus hijos',
+  url: site.href,
+  image: ogImage,
+  logo: new URL('/apple-touch-icon.png', site).href,
+  address: {
+    '@type': 'PostalAddress',
+    ...(SITE.address.street ? { streetAddress: SITE.address.street } : {}),
+    addressLocality: SITE.address.locality,
+    addressRegion: SITE.address.region,
+    addressCountry: SITE.address.country,
+  },
+  ...(SITE.whatsappNumber ? { telephone: `+${SITE.whatsappNumber}` } : {}),
+  areaServed: ['Núñez', 'Belgrano', 'Vicente López', 'Olivos'].map((name) => ({
+    '@type': 'Place',
+    name,
+  })),
+  amenityFeature: [
+    'Predio propio y exclusivo',
+    '3 piletas',
+    'Guardavidas permanentes',
+    'Servicio médico permanente',
+    'Transporte puerta a puerta',
+    'Almuerzo y merienda',
+  ].map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+  potentialAction: {
+    '@type': 'CommunicateAction',
+    target: waLink(),
+  },
+  sameAs: [SITE.social.instagram, SITE.social.facebook],
+};
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#1C6E96" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Fuentes: Google Fonts self-hosteadas por Astro (font-display: swap + preload) -->
+    <Font cssVariable="--font-bebas" preload />
+    <Font cssVariable="--font-nunito" preload />
+
+    <!-- Open Graph (clave para compartir por WhatsApp) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Grupo de chicos y chicas sonriendo junto a la pileta — Sprint Colonia" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Activa las animaciones de scroll solo si hay JS (sin JS, todo visible) -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <slot />
+
+    <script>
+      // Fade-up / slide sutil al entrar en pantalla (IntersectionObserver + CSS).
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

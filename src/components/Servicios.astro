@@ -1,0 +1,149 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+
+const servicios: { id: string; icon: IconName; tone: string; eyebrow: string; title: string; text: string; items: string[] }[] = [
+  {
+    id: 'transporte',
+    icon: 'bus',
+    tone: 'sky',
+    eyebrow: 'Transporte',
+    title: 'De casa a la colonia, y de vuelta',
+    text: 'Un servicio pensado para que la logística del verano no sea un problema para la familia.',
+    items: [
+      'Servicio puerta a puerta o por paradas fijas',
+      'Unidades habilitadas y choferes profesionales',
+      'Se contrata al momento de la inscripción',
+    ],
+  },
+  {
+    id: 'medico',
+    icon: 'stethoscope',
+    tone: 'red',
+    eyebrow: 'Servicio médico',
+    title: 'Cuidados durante toda la jornada',
+    text: 'La salud y la seguridad de los chicos están cubiertas desde que llegan hasta que se van.',
+    items: [
+      'Personal médico durante toda la franja horaria',
+      'Guardavidas permanentes en las piletas',
+      'Ambulancia de urgencias para traslados',
+    ],
+  },
+];
+---
+
+<section id="servicios" class="section section--white" aria-labelledby="servicios-title">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow">Seguridad</p>
+      <h2 id="servicios-title" class="section-title">Tranquilidad de ida, de vuelta y durante todo el día</h2>
+    </div>
+
+    <div class="servicios">
+      {
+        servicios.map((s, i) => (
+          <article
+            id={s.id}
+            class:list={['servicio', `servicio--${s.tone}`]}
+            data-reveal={i === 0 ? 'left' : 'right'}
+            aria-labelledby={`${s.id}-title`}
+          >
+            <span class:list={['icon-tile', 'icon-tile--lg', s.tone !== 'sky' && `icon-tile--${s.tone}`]}>
+              <Icon name={s.icon} />
+            </span>
+            <p class="servicio__eyebrow">{s.eyebrow}</p>
+            <h3 id={`${s.id}-title`} class="servicio__title">
+              {s.title}
+            </h3>
+            <p class="servicio__text">{s.text}</p>
+            <ul class="servicio__list" role="list">
+              {s.items.map((item) => (
+                <li>
+                  <span class="check" aria-hidden="true">
+                    <Icon name="check" size={16} />
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .servicios {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 900px) {
+    .servicios { grid-template-columns: 1fr 1fr; }
+  }
+
+  .servicio {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    border-radius: var(--radius-lg);
+    background: var(--color-sky-soft);
+  }
+  .servicio--red { background: #FFF1EC; }
+  .servicio::after {
+    content: '';
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.55);
+  }
+
+  .servicio .icon-tile {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1.25rem;
+    background: var(--color-white);
+  }
+  .servicio__eyebrow {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-sky-dark);
+  }
+  .servicio--red .servicio__eyebrow { color: #B91C1C; }
+
+  .servicio__title {
+    margin: 0.35rem 0 0.75rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    letter-spacing: 0.015em;
+  }
+  .servicio__text { color: var(--color-text-muted); }
+
+  .servicio__list {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .servicio__list li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-weight: 700;
+  }
+  .check {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: var(--color-grass);
+    color: var(--color-white);
+  }
+</style>

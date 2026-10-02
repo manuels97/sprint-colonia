@@ -1,0 +1,48 @@
+---
+import Icon from './Icon.astro';
+import { waLink } from '../config/site';
+---
+
+<a class="wa-float" href={waLink()} target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
+  <Icon name="whatsapp" size={30} />
+</a>
+
+<style>
+  .wa-float {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 60;
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--color-whatsapp);
+    color: var(--color-white);
+    box-shadow: 0 8px 24px rgb(18 140 75 / 0.35);
+    transition: transform 0.2s var(--ease-out);
+  }
+  .wa-float:hover { transform: scale(1.07); }
+
+  /* Pulse sutil cada pocos segundos */
+  .wa-float::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--color-whatsapp);
+    animation: wa-pulse 4s ease-out 2s infinite;
+  }
+
+  @keyframes wa-pulse {
+    0% { transform: scale(1); opacity: 0.55; }
+    35%,
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wa-float::before { animation: none; display: none; }
+  }
+</style>

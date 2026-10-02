@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# [CONFIRMAR] actualizar con el dominio definitivo
+Sitemap: https://sprintcolonia.com.ar/sitemap-index.xml

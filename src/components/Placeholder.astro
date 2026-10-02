@@ -1,0 +1,11 @@
+---
+/** Marca visible de dato pendiente de confirmar con el cliente. */
+interface Props {
+  label?: string;
+}
+const { label } = Astro.props;
+---
+
+<span class="todo" title="Dato pendiente de confirmar con el cliente">
+  CONFIRMAR{label ? ` ${label}` : ''}
+</span>

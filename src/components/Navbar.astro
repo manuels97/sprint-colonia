@@ -1,0 +1,272 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { NAV_LINKS, waLink } from '../config/site';
+
+// Testimonios queda fuera del menú principal (sigue en el footer).
+const links = NAV_LINKS.filter((link) => link.href !== '#testimonios');
+---
+
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a href="#inicio" class="brand" aria-label="Sprint Colonia — ir al inicio">
+      <Logo />
+    </a>
+
+    <nav class="nav" aria-label="Principal">
+      <ul id="nav-menu" class="nav-list" role="list" data-menu>
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href} class="nav-link">
+                <svg class="nav-shield" viewBox="0 0 24 24" aria-hidden="true">
+                  <path class="nav-shield__body" d="M12 2.5 4.5 5.3v5.9c0 4.7 3.2 8.9 7.5 10.3 4.3-1.4 7.5-5.6 7.5-10.3V5.3L12 2.5z" />
+                  <path class="nav-shield__heart" d="M12 16.2s-4-2.4-4-5.1a2.1 2.1 0 0 1 4-1 2.1 2.1 0 0 1 4 1c0 2.7-4 5.1-4 5.1z" />
+                </svg>
+                <span class="nav-link__text">{link.label}</span>
+              </a>
+            </li>
+          ))
+        }
+        <li class="nav-cta-mobile">
+          <a class="btn btn--sun btn--block" href={waLink()} target="_blank" rel="noopener">
+            <Icon name="whatsapp" /> Quiero más info
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <a class="btn btn--sun header-cta" href={waLink()} target="_blank" rel="noopener">
+      <Icon name="whatsapp" /> Quiero más info
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-menu"
+      aria-label="Abrir menú"
+      data-menu-toggle
+    >
+      <Icon name="menu" class="menu-toggle__open" />
+      <Icon name="close" class="menu-toggle__close" />
+    </button>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    /* Arriba de todo: vidrio esmerilado que deja ver el video del hero */
+    background: rgb(255 251 242 / 0.45);
+    backdrop-filter: saturate(1.4) blur(10px);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  /* Al bajar (o con el menú mobile abierto) queda casi sólido */
+  .site-header.is-scrolled,
+  .site-header.is-open {
+    background: rgb(255 251 242 / 0.92);
+  }
+  .site-header.is-scrolled {
+    border-color: var(--color-border);
+    box-shadow: 0 6px 24px rgb(27 42 51 / 0.06);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: var(--header-h);
+  }
+
+  .brand {
+    text-decoration: none;
+    margin-right: auto;
+    border-radius: 8px;
+  }
+
+  .header-cta { display: none; min-height: 44px; padding: 0.6rem 1.15rem; font-size: 0.95rem; }
+
+  .menu-toggle {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 14px;
+    background: var(--color-sky-soft);
+    color: var(--color-sky-dark);
+  }
+  .menu-toggle svg { width: 26px; height: 26px; }
+  .menu-toggle__close { display: none; }
+  .site-header.is-open .menu-toggle__open { display: none; }
+  .site-header.is-open .menu-toggle__close { display: block; }
+
+  /* Menú mobile: panel desplegable bajo el header */
+  .nav-list {
+    position: absolute;
+    inset: var(--header-h) 0 auto 0;
+    display: grid;
+    gap: 0.25rem;
+    padding: 1rem var(--gutter) 1.5rem;
+    background: var(--color-cream);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 18px 32px rgb(27 42 51 / 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out), visibility 0.25s;
+    max-height: calc(100svh - var(--header-h));
+    overflow-y: auto;
+  }
+  .site-header.is-open .nav-list {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  /* Links en mayúsculas con hover de "protección": aparece un escudo con
+     corazón y se dibuja un subrayado ondulado tipo crayón. Cada link toma
+     un color de la paleta. */
+  .nav-list > li:nth-child(4n + 1) { --accent: var(--color-sky); --accent-text: var(--color-sky-dark); }
+  .nav-list > li:nth-child(4n + 2) { --accent: var(--color-grass); --accent-text: var(--color-grass-dark); }
+  .nav-list > li:nth-child(4n + 3) { --accent: var(--color-sun); --accent-text: #B26F00; }
+  .nav-list > li:nth-child(4n + 4) { --accent: var(--color-sprint-red); --accent-text: #B91C1C; }
+
+  .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 0.75rem;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-night);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-link__text { position: relative; }
+
+  /* Subrayado ondulado, se "dibuja" de izquierda a derecha */
+  .nav-link__text::after {
+    --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3c2 0 2-2 4-2s2 4 4 4 2-4 4-4 2 2 4 2' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px;
+    height: 6px;
+    background: var(--accent);
+    -webkit-mask: var(--wave) repeat-x left center / 16px 6px;
+    mask: var(--wave) repeat-x left center / 16px 6px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.35s var(--ease-out);
+  }
+
+  /* Escudo con corazón: cuidado y seguridad */
+  .nav-shield {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    opacity: 0;
+    transform: scale(0.4) rotate(-20deg);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+  }
+  .nav-shield__body { fill: var(--accent); }
+  .nav-shield__heart { fill: var(--color-white); }
+
+  .nav-link:hover,
+  .nav-link:focus-visible { color: var(--accent-text); }
+  .nav-link:hover .nav-link__text::after,
+  .nav-link:focus-visible .nav-link__text::after { clip-path: inset(0); }
+  .nav-link:hover .nav-shield,
+  .nav-link:focus-visible .nav-shield {
+    opacity: 1;
+    transform: none;
+    animation: shield-wiggle 0.6s 0.3s ease-in-out;
+  }
+
+  @keyframes shield-wiggle {
+    0%, 100% { rotate: 0deg; }
+    25% { rotate: -12deg; }
+    75% { rotate: 10deg; }
+  }
+
+  .nav-cta-mobile { margin-top: 0.75rem; }
+
+  @media (min-width: 560px) {
+    .header-cta { display: inline-flex; }
+  }
+
+  @media (min-width: 1180px) {
+    .menu-toggle,
+    .nav-cta-mobile { display: none; }
+
+    .nav-list {
+      position: static;
+      display: flex;
+      gap: 0.1rem;
+      padding: 0;
+      background: none;
+      border: 0;
+      box-shadow: none;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      max-height: none;
+      overflow: visible;
+    }
+    .nav-link {
+      padding: 0.5rem 0.55rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.07em;
+    }
+    /* En desktop el escudo asoma por encima del texto, sin mover el layout */
+    .nav-shield {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      margin-left: -9px;
+      transform: translateY(10px) scale(0.4);
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+
+  if (header && toggle && menu) {
+    const setOpen = (open: boolean) => {
+      header.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    };
+
+    toggle.addEventListener('click', () => setOpen(!header.classList.contains('is-open')));
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && header.classList.contains('is-open')) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

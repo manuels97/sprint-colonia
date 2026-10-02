@@ -1,0 +1,220 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import { waLink } from '../config/site';
+
+const turnos: { icon: IconName; title: string; text: string; tone: string; tag?: string }[] = [
+  {
+    icon: 'sunrise',
+    title: 'Turno mañana',
+    text: 'Medio día de pileta, deporte y juego, ideal para los que prefieren arrancar temprano.',
+    tone: 'sky',
+  },
+  {
+    icon: 'sun',
+    title: 'Turno completo',
+    text: 'Toda la jornada en la colonia: actividades de mañana y de tarde, con almuerzo y merienda en el predio.',
+    tone: 'sun',
+    tag: 'Incluye almuerzo y merienda',
+  },
+  {
+    icon: 'sunset',
+    title: 'Turno tarde',
+    text: 'Medio día por la tarde, para combinar con la rutina de la familia sin perderse nada del verano.',
+    tone: 'grass',
+  },
+];
+
+const packs = [
+  { title: 'Semanal', text: 'Para probar o sumar una semana puntual.' },
+  { title: 'Quincenal', text: 'Dos semanas para disfrutar a pleno.' },
+  { title: 'Mensual', text: 'Un mes entero de colonia.' },
+  { title: 'Temporada', text: 'Todo el verano, de principio a fin.' },
+];
+---
+
+<section id="horarios" class="section" aria-labelledby="horarios-title">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow">Turnos, horarios y packs</p>
+      <h2 id="horarios-title" class="section-title">Elegí el turno que mejor se adapta a tu familia</h2>
+      <p class="section-lead">Medio día o jornada completa, y packs flexibles para armar el verano a tu medida.</p>
+    </div>
+
+    <ul class="turnos" role="list">
+      {
+        turnos.map((t, i) => (
+          <li class:list={['turno', { 'turno--featured': t.tag }]} data-reveal style={`--reveal-delay: ${i * 80}ms`}>
+            {t.tag && <span class="turno__tag">{t.tag}</span>}
+            <span class:list={['icon-tile', 'icon-tile--lg', t.tone !== 'sky' && `icon-tile--${t.tone}`]}>
+              <Icon name={t.icon} />
+            </span>
+            <h3 class="turno__title">{t.title}</h3>
+            <p class="turno__text">{t.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="prehora" data-reveal>
+      <span class="icon-tile icon-tile--grass"><Icon name="alarm" /></span>
+      <div>
+        <h3>Servicio de pre-hora</h3>
+        <p>¿Entrás temprano a trabajar? Podés dejar a los chicos antes del inicio del turno, con el mismo cuidado de siempre.</p>
+      </div>
+    </div>
+
+    <h3 class="packs-title" data-reveal>Packs</h3>
+    <ul class="packs" role="list">
+      {
+        packs.map((p, i) => (
+          <li class="pack" data-reveal style={`--reveal-delay: ${i * 70}ms`}>
+            <span class="pack__label">Pack</span>
+            <h4 class="pack__title">{p.title}</h4>
+            <p class="pack__text">{p.text}</p>
+            <p class="pack__price">
+              <span class="sr-only">Precio: </span>Consultar
+            </p>
+            <a
+              class="pack__link"
+              href={waLink(`Hola, quiero consultar por el pack ${p.title.toLowerCase()} de Sprint Colonia`)}
+              target="_blank"
+              rel="noopener"
+              aria-label={`Consultar precio del pack ${p.title.toLowerCase()} por WhatsApp`}
+            >
+              Consultar precio <Icon name="arrow-right" size={18} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="horarios-cta" data-reveal>
+      <a class="btn btn--sky btn--lg" href={waLink('Hola, quiero consultar disponibilidad en Sprint Colonia')} target="_blank" rel="noopener">
+        <Icon name="whatsapp" /> Consultar disponibilidad
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .turnos {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 900px) {
+    .turnos { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+  }
+
+  .turno {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 2rem 1.75rem;
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+  }
+  .turno .icon-tile { margin-bottom: 0.75rem; }
+  .turno__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 2rem;
+    letter-spacing: 0.02em;
+  }
+  .turno__text { color: var(--color-text-muted); }
+
+  .turno--featured {
+    border: 2px solid var(--color-sun);
+    box-shadow: var(--shadow);
+  }
+  @media (min-width: 900px) {
+    .turno--featured { translate: 0 -10px; }
+  }
+  .turno__tag {
+    position: absolute;
+    top: -14px;
+    left: 1.75rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-sun);
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--color-night);
+  }
+
+  .prehora {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-top: 1.5rem;
+    padding: 1.4rem 1.6rem;
+    border-radius: var(--radius);
+    background: var(--color-grass-soft);
+  }
+  .prehora .icon-tile { background: var(--color-white); }
+  .prehora h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.2rem; }
+  .prehora p { color: var(--color-text-muted); }
+
+  .packs-title {
+    margin: clamp(3rem, 6vw, 4rem) 0 1.25rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  .packs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+    gap: 1rem;
+  }
+  .pack {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s;
+  }
+  .pack:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--color-sky); }
+  .pack__label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-sky-dark);
+  }
+  .pack__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 2.1rem;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+  }
+  .pack__text { flex: 1; color: var(--color-text-muted); font-size: 0.97rem; }
+  .pack__price {
+    margin: 1rem 0 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--color-border);
+    font-size: 1.35rem;
+    font-weight: 800;
+  }
+  .pack__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: auto;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .pack__link:hover { text-decoration: underline; }
+
+  .horarios-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+  }
+</style>

@@ -1,0 +1,204 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import nosotrosImg from '../assets/images/chicos-pileta.png';
+
+const valores = ['Seguridad', 'Responsabilidad', 'Compromiso', 'Espíritu de equipo'];
+const badges = [
+  { icon: 'award', label: '42 años', tone: 'sun' },
+  { icon: 'home', label: 'Predio propio y exclusivo', tone: 'grass' },
+  { icon: 'cap', label: 'Equipo de profesores especializados', tone: 'sky' },
+] as const;
+---
+
+<section id="nosotros" class="section" aria-labelledby="nosotros-title">
+  <div class="container nosotros">
+    <div class="nosotros__media" data-reveal="left">
+      <Image
+        src={nosotrosImg}
+        alt="Grupo de chicos y chicas sonriendo abrazados con una profesora junto a la pileta"
+        widths={[360, nosotrosImg.width]}
+        sizes="(min-width: 960px) 520px, calc(100vw - 32px)"
+        quality={80}
+        loading="lazy"
+        class="nosotros__img"
+      />
+      <div class="nosotros__years" aria-hidden="true">
+        <strong>42</strong>
+        <span>años de<br />colonia</span>
+      </div>
+    </div>
+
+    <div class="nosotros__body">
+      <div data-reveal>
+        <p class="eyebrow">Nosotros</p>
+        <h2 id="nosotros-title" class="section-title">Una colonia con historia y un predio propio</h2>
+      </div>
+
+      <div class="nosotros__text" data-reveal style="--reveal-delay: 80ms">
+        <p>
+          Hace <strong>42 años</strong> que organizamos, planificamos y dirigimos colonias de vacaciones. Lo hacemos en un
+          <strong>predio propio, amplio y con mucho verde</strong>, pensado para que los chicos jueguen, creen y aprendan con
+          total tranquilidad.
+        </p>
+        <p>
+          Seguridad, servicio médico y guardavidas están presentes durante toda la jornada, y cada actividad la coordina un
+          equipo de profesores especializados en su área. Nuestro compromiso es simple: que cada chico y cada chica viva el
+          verano en plenitud, y que cada familia lo viva con la tranquilidad de saber dónde y con quién están.
+        </p>
+      </div>
+
+      <div class="nosotros__cards">
+        <article class="mini-card" data-reveal style="--reveal-delay: 120ms">
+          <span class="icon-tile icon-tile--grass"><Icon name="target" /></span>
+          <div>
+            <h3>Misión</h3>
+            <p>Educar en el tiempo libre e inculcar valores a través del deporte, el juego y la recreación.</p>
+          </div>
+        </article>
+        <article class="mini-card" data-reveal style="--reveal-delay: 180ms">
+          <span class="icon-tile icon-tile--sun"><Icon name="heart" /></span>
+          <div>
+            <h3>Valores</h3>
+            <ul class="valores" role="list">
+              {valores.map((v) => <li>{v}</li>)}
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <ul class="badges" role="list" data-reveal style="--reveal-delay: 220ms">
+        {
+          badges.map((b) => (
+            <li class="chip">
+              <span class:list={['badge-dot', `badge-dot--${b.tone}`]}>
+                <Icon name={b.icon} size={16} />
+              </span>
+              {b.label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .nosotros {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 4.5rem);
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .nosotros { grid-template-columns: 0.9fr 1.1fr; }
+  }
+
+  .nosotros__media {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  .nosotros__img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .nosotros__years {
+    position: absolute;
+    right: -0.5rem;
+    bottom: -1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1.3rem;
+    border-radius: var(--radius);
+    background: var(--color-sun);
+    color: var(--color-night);
+    box-shadow: var(--shadow);
+    rotate: -3deg;
+  }
+  @media (min-width: 960px) {
+    .nosotros__years { right: -1.5rem; }
+  }
+  .nosotros__years strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 3.4rem;
+    line-height: 0.9;
+  }
+  .nosotros__years span {
+    font-weight: 800;
+    font-size: 0.95rem;
+    line-height: 1.15;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .nosotros__text {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    color: var(--color-text-muted);
+  }
+  .nosotros__text strong { color: var(--color-night); }
+
+  .nosotros__cards {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 640px) {
+    .nosotros__cards { grid-template-columns: 1fr 1fr; }
+  }
+
+  .mini-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+  }
+  .mini-card h3 {
+    margin-bottom: 0.3rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+  .mini-card p {
+    font-size: 0.97rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+  }
+
+  .valores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.9rem;
+    font-size: 0.97rem;
+    color: var(--color-text-muted);
+  }
+  .valores li::before {
+    content: '•';
+    margin-right: 0.35rem;
+    color: var(--color-grass);
+  }
+
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+  .badge-dot {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+  }
+  .badge-dot--sun { background: var(--color-sun-soft); color: #B26F00; }
+  .badge-dot--grass { background: var(--color-grass-soft); color: var(--color-grass-dark); }
+  .badge-dot--sky { background: var(--color-sky-soft); color: var(--color-sky-dark); }
+</style>

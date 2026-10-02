@@ -1,0 +1,320 @@
+---
+import Icon from './Icon.astro';
+import Placeholder from './Placeholder.astro';
+import { SITE, waLink } from '../config/site';
+
+const requisitos = [
+  'DNI del chico o chica.',
+  'Apto médico.',
+  'Seña del 30% al inscribirse (efectivo, débito o crédito).',
+];
+---
+
+<section id="contacto" class="section section--white" aria-labelledby="contacto-title">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow">Inscripción y contacto</p>
+      <h2 id="contacto-title" class="section-title">Reservá el lugar para este verano</h2>
+      <p class="section-lead">Escribinos por WhatsApp y te respondemos con toda la info: turnos, packs, transporte y disponibilidad.</p>
+    </div>
+
+    <div class="contacto">
+      <!-- WhatsApp primero: es el canal real de conversión -->
+      <div class="contacto__main">
+        <div class="wa-card" data-reveal="left">
+          <span class="wa-card__icon" aria-hidden="true"><Icon name="whatsapp" size={34} /></span>
+          <h3 class="wa-card__title">La forma más rápida: WhatsApp</h3>
+          <p class="wa-card__text">Te respondemos personalmente y resolvemos todas tus dudas antes de inscribir.</p>
+          <a class="btn btn--sun btn--lg btn--block" href={waLink()} target="_blank" rel="noopener">
+            <Icon name="whatsapp" /> Escribinos por WhatsApp
+          </a>
+          <p class="wa-card__number">
+            <Icon name="phone" size={18} />
+            {SITE.whatsappNumber ? `+${SITE.whatsappNumber}` : <Placeholder label="número" />}
+          </p>
+        </div>
+
+        <div class="requisitos" data-reveal="left" style="--reveal-delay: 100ms">
+          <details open>
+            <summary>
+              <span class="icon-tile icon-tile--grass"><Icon name="file" /></span>
+              <span>Requisitos de inscripción</span>
+              <Icon name="chevron-down" class="chev" />
+            </summary>
+            <ul role="list">
+              {
+                requisitos.map((r) => (
+                  <li>
+                    <Icon name="check" size={18} /> {r}
+                  </li>
+                ))
+              }
+            </ul>
+          </details>
+          <details>
+            <summary>
+              <span class="icon-tile icon-tile--sun"><Icon name="cap" /></span>
+              <span>Convenios con colegios y empresas</span>
+              <Icon name="chevron-down" class="chev" />
+            </summary>
+            <p>
+              Consultanos si tu colegio o empresa tiene convenio con Sprint Colonia. <Placeholder label="listado vigente" />
+            </p>
+          </details>
+        </div>
+      </div>
+
+      <form class="form" data-contact-form data-reveal="right" novalidate>
+        <h3 class="form__title">¿Preferís dejarnos tus datos?</h3>
+        <p class="form__hint">Completá el formulario y se abre WhatsApp con tu consulta lista para enviar.</p>
+
+        <div class="form__grid">
+          <label class="field field--full">
+            <span>Nombre completo</span>
+            <input name="nombre" type="text" autocomplete="name" required />
+          </label>
+          <label class="field">
+            <span>Teléfono</span>
+            <input name="telefono" type="tel" autocomplete="tel" inputmode="tel" required />
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+          <label class="field">
+            <span>Edad del chico o chica</span>
+            <input name="edad" type="text" inputmode="numeric" placeholder="Ej: 7" required />
+          </label>
+          <label class="field">
+            <span>Turno de interés</span>
+            <select name="turno" required>
+              <option value="" disabled selected>Elegí un turno</option>
+              <option>Turno mañana</option>
+              <option>Turno tarde</option>
+              <option>Turno completo</option>
+              <option>Todavía no sé</option>
+            </select>
+          </label>
+          <label class="field field--full">
+            <span>Mensaje <small>(opcional)</small></span>
+            <textarea name="mensaje" rows="4" placeholder="Contanos qué necesitás: fechas, pack, transporte…"></textarea>
+          </label>
+        </div>
+
+        <p class="form__error" role="alert" data-form-error hidden>Revisá los campos marcados para poder enviar tu consulta.</p>
+
+        <button type="submit" class="btn btn--sky btn--lg btn--block">
+          Enviar consulta <Icon name="arrow-right" />
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contacto {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (min-width: 960px) {
+    .contacto { grid-template-columns: 0.9fr 1.1fr; gap: 2rem; }
+  }
+  .contacto__main { display: grid; gap: 1.5rem; }
+
+  .wa-card {
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(circle at 100% 0%, rgb(37 211 102 / 0.28), transparent 50%),
+      var(--color-night);
+    color: var(--color-white);
+    box-shadow: var(--shadow-lg);
+  }
+  .wa-card__icon {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1.25rem;
+    border-radius: 20px;
+    background: var(--color-whatsapp);
+    color: var(--color-white);
+  }
+  .wa-card__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    letter-spacing: 0.015em;
+  }
+  .wa-card__text {
+    margin: 0.5rem 0 1.5rem;
+    color: rgb(255 255 255 / 0.82);
+  }
+  .wa-card__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-weight: 700;
+    color: rgb(255 255 255 / 0.85);
+  }
+  .wa-card__number :global(.todo) { color: var(--color-sun); }
+
+  .requisitos {
+    display: grid;
+    gap: 0.75rem;
+  }
+  details {
+    border-radius: var(--radius);
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem 1.25rem;
+    font-weight: 800;
+    font-size: 1.05rem;
+    cursor: pointer;
+    list-style: none;
+    border-radius: var(--radius);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary .icon-tile { width: 42px; height: 42px; border-radius: 12px; }
+  summary .icon-tile :global(svg) { width: 22px; height: 22px; }
+  summary :global(.chev) {
+    margin-left: auto;
+    color: var(--color-text-muted);
+    transition: rotate 0.25s var(--ease-out);
+  }
+  details[open] summary :global(.chev) { rotate: 180deg; }
+  details ul,
+  details p {
+    padding: 0 1.25rem 1.25rem;
+    color: var(--color-text-muted);
+  }
+  details ul { display: grid; gap: 0.5rem; }
+  details li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+  details li :global(svg) { margin-top: 4px; color: var(--color-grass-dark); flex-shrink: 0; }
+  details p :global(.todo) { color: #8A5A00; }
+
+  .form {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border-radius: var(--radius-lg);
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+  }
+  .form__title {
+    font-size: 1.35rem;
+    font-weight: 800;
+  }
+  .form__hint {
+    margin: 0.25rem 0 1.5rem;
+    color: var(--color-text-muted);
+    font-size: 0.97rem;
+  }
+  .form__grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (min-width: 560px) {
+    .form__grid { grid-template-columns: 1fr 1fr; }
+    .field--full { grid-column: 1 / -1; }
+  }
+
+  .field {
+    display: grid;
+    gap: 0.35rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .field small { font-weight: 600; color: var(--color-text-muted); }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 50px;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #DCD2BC;
+    border-radius: 14px;
+    background: var(--color-white);
+    font-weight: 600;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field textarea { resize: vertical; min-height: 110px; }
+  .field input::placeholder,
+  .field textarea::placeholder { color: #7D8A8E; font-weight: 400; }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--color-sky);
+    box-shadow: 0 0 0 4px rgb(46 156 202 / 0.2);
+  }
+  .field :is(input, select, textarea)[aria-invalid='true'] {
+    border-color: var(--color-sprint-red);
+    box-shadow: 0 0 0 4px rgb(220 38 38 / 0.12);
+  }
+
+  .form__error {
+    margin: -0.5rem 0 1rem;
+    color: #B91C1C;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+</style>
+
+<script>
+  import { waLink } from '../config/site';
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const error = document.querySelector<HTMLElement>('[data-form-error]');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea'));
+    let firstInvalid: HTMLElement | null = null;
+
+    for (const field of fields) {
+      const valid = field.checkValidity();
+      field.setAttribute('aria-invalid', String(!valid));
+      if (!valid && !firstInvalid) firstInvalid = field;
+    }
+
+    if (firstInvalid) {
+      if (error) error.hidden = false;
+      firstInvalid.focus();
+      return;
+    }
+    if (error) error.hidden = true;
+
+    const data = new FormData(form);
+    const get = (k: string) => String(data.get(k) ?? '').trim();
+    const lines = [
+      'Hola, quiero más info sobre Sprint Colonia.',
+      `Nombre: ${get('nombre')}`,
+      `Teléfono: ${get('telefono')}`,
+      `Email: ${get('email')}`,
+      `Edad del chico/a: ${get('edad')}`,
+      `Turno de interés: ${get('turno')}`,
+    ];
+    if (get('mensaje')) lines.push(`Mensaje: ${get('mensaje')}`);
+
+    window.open(waLink(lines.join('\n')), '_blank', 'noopener');
+  });
+
+  form?.addEventListener('input', (e) => {
+    const field = e.target as HTMLInputElement;
+    if (field.getAttribute('aria-invalid') === 'true' && field.checkValidity()) {
+      field.setAttribute('aria-invalid', 'false');
+    }
+  });
+</script>

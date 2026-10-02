@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+
+/**
+ * Logo oficial de Sprint Colonia (PNG transparente, azul y naranja).
+ * `variant="dark"` lo apoya sobre una placa blanca para fondos oscuros (footer).
+ */
+interface Props {
+  variant?: 'light' | 'dark';
+}
+const { variant = 'light' } = Astro.props;
+---
+
+<span class:list={['logo', `logo--${variant}`]}>
+  <Image src={logo} alt="Sprint Colonia" height={52} densities={[1, 1.5]} loading="eager" class="logo__img" />
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+  }
+  .logo__img {
+    width: auto;
+    height: 52px;
+  }
+  .logo--dark {
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius);
+    background: var(--color-white);
+  }
+</style>
