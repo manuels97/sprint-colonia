@@ -5,15 +5,17 @@ import logo from '../assets/logo.png';
 /**
  * Logo oficial de Sprint Colonia (PNG transparente, azul y naranja).
  * `variant="dark"` lo apoya sobre una placa blanca para fondos oscuros (footer).
+ * `height` fija el alto en px (por defecto 52).
  */
 interface Props {
   variant?: 'light' | 'dark';
+  height?: number;
 }
-const { variant = 'light' } = Astro.props;
+const { variant = 'light', height = 52 } = Astro.props;
 ---
 
-<span class:list={['logo', `logo--${variant}`]}>
-  <Image src={logo} alt="Sprint Colonia" height={52} densities={[1, 1.5]} loading="eager" class="logo__img" />
+<span class:list={['logo', `logo--${variant}`]} style={`--logo-h: ${height}px`}>
+  <Image src={logo} alt="Sprint Colonia" height={height} densities={[1, 1.5]} loading="eager" class="logo__img" />
 </span>
 
 <style>
@@ -23,7 +25,7 @@ const { variant = 'light' } = Astro.props;
   }
   .logo__img {
     width: auto;
-    height: 52px;
+    height: var(--logo-h);
   }
   .logo--dark {
     padding: 0.4rem 0.9rem;
