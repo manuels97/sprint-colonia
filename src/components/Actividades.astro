@@ -4,7 +4,7 @@ import Icon, { type IconName } from './Icon.astro';
 import deportesImg from '../assets/images/camino-canchas.png';
 import talleresImg from '../assets/images/sede.png';
 import otrasImg from '../assets/images/espacio-voley.png';
-import naturalezaImg from '../assets/images/predio-verde.png';
+import naturalezaImg from '../assets/images/fogon.jpeg';
 
 const categorias: {
   title: string;
@@ -12,6 +12,8 @@ const categorias: {
   tone: 'sky' | 'grass' | 'sun' | 'red';
   img: ImageMetadata;
   alt: string;
+  /** Encuadre del recorte (object-position). */
+  focus?: string;
   items: string[];
 }[] = [
   {
@@ -43,7 +45,8 @@ const categorias: {
     icon: 'flame',
     tone: 'grass',
     img: naturalezaImg,
-    alt: 'Cancha de pasto rodeada de árboles en el predio',
+    alt: 'Fogón nocturno en el predio: chicos en ronda alrededor del fuego junto a un profesor',
+    focus: 'center 62%',
     items: ['Fogones', 'Trekking'],
   },
 ];
@@ -72,6 +75,7 @@ const categorias: {
                 sizes="(min-width: 1100px) 285px, (min-width: 640px) 50vw, 100vw"
                 quality={75}
                 loading="lazy"
+                style={c.focus && `object-position: ${c.focus}`}
               />
             </div>
             <div class="act__body">

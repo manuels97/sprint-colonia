@@ -1,0 +1,176 @@
+---
+/**
+ * Videos reales de la colonia (grabados por el equipo, formato vertical).
+ * Se reproducen sin sonido mientras están en pantalla; el botón activa el audio de uno a la vez.
+ */
+const clips = [
+  { file: 'wsp1', caption: 'Las piletas', label: 'Pileta del predio con andariveles y sombrilla amarilla al costado' },
+  { file: 'wsp3', caption: 'Tobogán de agua', label: 'Una nena se desliza por un tobogán de agua sobre el pasto mientras otros chicos esperan su turno' },
+  { file: 'wsp4', caption: 'Juegos y recreación', label: 'Chicos jugando con aros sobre la cancha de césped junto a una profesora' },
+  { file: 'wsp2', caption: 'Fogón', label: 'Fogón de noche: chicos en ronda alrededor del fuego con los profesores' },
+];
+---
+
+<section id="momentos" class="section section--white" aria-labelledby="momentos-title">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow">Momentos reales</p>
+      <h2 id="momentos-title" class="section-title">Así se vive la colonia</h2>
+      <p class="section-lead">Videos grabados por nuestro equipo durante la temporada, en el predio y con nuestros chicos.</p>
+    </div>
+
+    <ul class="clips" role="list">
+      {
+        clips.map((c, i) => (
+          <li class="clip" data-reveal style={`--reveal-delay: ${i * 80}ms`}>
+            <figure>
+              <video
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster={`/video/momentos/${c.file}.jpg`}
+                aria-label={c.label}
+                data-clip
+              >
+                <source src={`/video/momentos/${c.file}.mp4`} type="video/mp4" />
+              </video>
+              <button class="clip__sound" type="button" aria-pressed="false" aria-label={`Activar sonido: ${c.caption}`} data-sound>
+                <svg class="clip__ico clip__ico--off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M11 5 6 9H2v6h4l5 4V5z" /><path d="m22 9-6 6" /><path d="m16 9 6 6" />
+                </svg>
+                <svg class="clip__ico clip__ico--on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M11 5 6 9H2v6h4l5 4V5z" /><path d="M15.54 8.46a5 5 0 0 1 0 7.07" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </svg>
+              </button>
+              <figcaption>{c.caption}</figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Mobile: carrusel horizontal con snap; desktop: 4 columnas */
+  .clips {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 68%;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(var(--gutter, 1rem) * -1);
+    padding: 0 var(--gutter, 1rem) 0.5rem;
+    scroll-padding-inline: var(--gutter, 1rem);
+    scrollbar-width: none;
+  }
+  .clips::-webkit-scrollbar { display: none; }
+  @media (min-width: 640px) {
+    .clips { grid-auto-columns: 40%; }
+  }
+  @media (min-width: 960px) {
+    .clips {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      overflow: visible;
+      margin-inline: 0;
+      padding: 0;
+    }
+  }
+
+  .clip { scroll-snap-align: start; }
+  .clip figure {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--color-night);
+    box-shadow: var(--shadow-sm);
+  }
+  .clip video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .clip figure::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 30%;
+    background: linear-gradient(0deg, rgb(27 42 51 / 0.55), transparent);
+    pointer-events: none;
+  }
+
+  .clip figcaption {
+    position: absolute;
+    z-index: 1;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.92);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--color-night);
+  }
+
+  .clip__sound {
+    position: absolute;
+    z-index: 1;
+    top: 0.65rem;
+    right: 0.65rem;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(27 42 51 / 0.55);
+    color: var(--color-white);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .clip__sound:hover { background: rgb(27 42 51 / 0.8); }
+  .clip__sound[aria-pressed='true'] { background: var(--color-sun); color: var(--color-night); }
+  .clip__ico--on,
+  .clip__sound[aria-pressed='true'] .clip__ico--off { display: none; }
+  .clip__sound[aria-pressed='true'] .clip__ico--on { display: block; }
+</style>
+
+<script>
+  const videos = [...document.querySelectorAll<HTMLVideoElement>('[data-clip]')];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reproduce solo los clips visibles (y no carga nada hasta que se acercan a la pantalla)
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          const v = target as HTMLVideoElement;
+          if (isIntersecting) v.play().catch(() => {});
+          else v.pause();
+        });
+      },
+      { threshold: 0.5 },
+    );
+    videos.forEach((v) => io.observe(v));
+  }
+
+  // Sonido: uno a la vez
+  document.querySelectorAll<HTMLButtonElement>('[data-sound]').forEach((btn) => {
+    const video = btn.parentElement!.querySelector<HTMLVideoElement>('[data-clip]')!;
+    btn.addEventListener('click', () => {
+      const turnOn = video.muted;
+      document.querySelectorAll<HTMLButtonElement>('[data-sound]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      videos.forEach((v) => (v.muted = true));
+      if (turnOn) {
+        video.muted = false;
+        video.play().catch(() => {});
+        btn.setAttribute('aria-pressed', 'true');
+      }
+    });
+  });
+</script>

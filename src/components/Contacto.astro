@@ -1,13 +1,31 @@
 ---
 import Icon from './Icon.astro';
-import Placeholder from './Placeholder.astro';
 import { SITE, waLink } from '../config/site';
 
 const requisitos = [
   'DNI del chico o chica.',
   'Apto médico.',
-  'Seña del 30% al inscribirse (efectivo, débito o crédito).',
+  'Adelanto del 30% al inscribirse.',
 ];
+
+// Listado "Colonia 2027" que pasó el cliente.
+const colegios = [
+  'Patrocinio de San José',
+  'San Cayetano',
+  'Nuestra Sra. del Rosario',
+  'Highest College',
+  'Bethania',
+  'General Belgrano',
+  'Moruli',
+  'Santa María de los Ángeles',
+  'Maximiliano Kolbe',
+  'NEA 2000',
+  'San Isidro Labrador',
+  'San Eduardo',
+  'Puerta Abierta',
+];
+const empresas = ['Globant', 'Total Austral', 'Banco Santander', 'Citibank', 'Philips', 'Nubiral', 'ACA', 'Cencosud'];
+
 ---
 
 <section id="contacto" class="section section--white" aria-labelledby="contacto-title">
@@ -28,10 +46,22 @@ const requisitos = [
           <a class="btn btn--sun btn--lg btn--block" href={waLink()} target="_blank" rel="noopener">
             <Icon name="whatsapp" /> Escribinos por WhatsApp
           </a>
-          <p class="wa-card__number">
-            <Icon name="phone" size={18} />
-            {SITE.whatsappNumber ? `+${SITE.whatsappNumber}` : <Placeholder label="número" />}
-          </p>
+          <ul class="wa-card__contact" role="list">
+            <li>
+              <Icon name="whatsapp" size={18} />
+              <a href={waLink()} target="_blank" rel="noopener">{SITE.whatsappDisplay}</a>
+              <span aria-hidden="true">·</span>
+              <a href={waLink(undefined, SITE.whatsappAlt.number)} target="_blank" rel="noopener">{SITE.whatsappAlt.display}</a>
+            </li>
+            <li>
+              <Icon name="phone" size={18} />
+              <a href={`tel:${SITE.phone.number}`}>{SITE.phone.display}</a>
+            </li>
+            <li>
+              <Icon name="mail" size={18} />
+              <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            </li>
+          </ul>
         </div>
 
         <div class="requisitos" data-reveal="left" style="--reveal-delay: 100ms">
@@ -54,12 +84,19 @@ const requisitos = [
           <details>
             <summary>
               <span class="icon-tile icon-tile--sun"><Icon name="cap" /></span>
-              <span>Convenios con colegios y empresas</span>
+              <span>Colegios y empresas con descuento</span>
               <Icon name="chevron-down" class="chev" />
             </summary>
-            <p>
-              Consultanos si tu colegio o empresa tiene convenio con Sprint Colonia. <Placeholder label="listado vigente" />
-            </p>
+            <div class="descuentos">
+              <div>
+                <h4>Colegios</h4>
+                <ul role="list">{colegios.map((c) => <li>{c}</li>)}</ul>
+              </div>
+              <div>
+                <h4>Empresas</h4>
+                <ul role="list">{empresas.map((e) => <li>{e}</li>)}</ul>
+              </div>
+            </div>
           </details>
         </div>
       </div>
@@ -151,16 +188,23 @@ const requisitos = [
     margin: 0.5rem 0 1.5rem;
     color: rgb(255 255 255 / 0.82);
   }
-  .wa-card__number {
-    display: flex;
-    align-items: center;
+  .wa-card__contact {
+    display: grid;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     margin-top: 1rem;
     font-weight: 700;
     color: rgb(255 255 255 / 0.85);
   }
-  .wa-card__number :global(.todo) { color: var(--color-sun); }
+  .wa-card__contact li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .wa-card__contact :global(svg) { color: var(--color-sun); flex-shrink: 0; }
+  .wa-card__contact a { color: inherit; text-decoration: none; }
+  .wa-card__contact a:hover { color: var(--color-sun); text-decoration: underline; }
 
   .requisitos {
     display: grid;
@@ -203,7 +247,25 @@ const requisitos = [
     align-items: flex-start;
   }
   details li :global(svg) { margin-top: 4px; color: var(--color-grass-dark); flex-shrink: 0; }
-  details p :global(.todo) { color: #8A5A00; }
+  .descuentos {
+    display: grid;
+    gap: 1rem;
+    padding: 0 1.25rem 1.25rem;
+  }
+  @media (min-width: 480px) {
+    .descuentos { grid-template-columns: 1.3fr 1fr; }
+  }
+  .descuentos h4 {
+    margin-bottom: 0.4rem;
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+  .descuentos ul {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0;
+    font-size: 0.95rem;
+  }
 
   .form {
     padding: clamp(1.5rem, 4vw, 2.5rem);

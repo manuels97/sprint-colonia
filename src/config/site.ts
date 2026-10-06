@@ -14,11 +14,16 @@ export const SITE = {
     'Sprint Colonia: 42 años cuidando el verano de tus hijos en Núñez. Predio exclusivo y seguro, 3 piletas, servicio médico y transporte puerta a puerta.',
 
   /**
-   * [CONFIRMAR] WhatsApp público, formato internacional sin "+" ni espacios
-   * (ej: 5491112345678). Mientras esté vacío, los botones abren WhatsApp con
-   * el mensaje listo pero sin destinatario.
+   * WhatsApp principal (línea A), formato internacional sin "+" ni espacios.
+   * Es el destino de todos los botones de WhatsApp del sitio.
    */
-  whatsappNumber: '',
+  whatsappNumber: '5491144700114',
+  whatsappDisplay: '11-4470-0114',
+  /** WhatsApp secundario (línea B). Se muestra en Contacto y en el footer. */
+  whatsappAlt: { number: '5491163652222', display: '11-6365-2222' },
+  /** Teléfono fijo. */
+  phone: { number: '+541147817675', display: '11-4781-7675' },
+  email: 'coloniasprint@gmail.com',
   whatsappMessage: 'Hola, quiero más info sobre Sprint Colonia',
 
   /** [CONFIRMAR] Dirección exacta del predio. `street: null` muestra el placeholder. */
@@ -51,15 +56,13 @@ export const SITE = {
    * Video corto de fondo para el hero (5–10 s, sin audio, < 2 MB).
    * Ej: '/video/hero.mp4'. Vacío = se usa solo la foto.
    */
-  heroVideo: '/video/hero.mp4',
+  heroVideo: '',
 } as const;
 
-/** Link de WhatsApp con mensaje precargado. */
-export function waLink(message: string = SITE.whatsappMessage): string {
+/** Link de WhatsApp con mensaje precargado (por defecto, a la línea A). */
+export function waLink(message: string = SITE.whatsappMessage, number: string = SITE.whatsappNumber): string {
   const text = encodeURIComponent(message);
-  return SITE.whatsappNumber
-    ? `https://wa.me/${SITE.whatsappNumber}?text=${text}`
-    : `https://wa.me/?text=${text}`;
+  return number ? `https://wa.me/${number}?text=${text}` : `https://wa.me/?text=${text}`;
 }
 
 export const NAV_LINKS = [

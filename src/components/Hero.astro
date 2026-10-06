@@ -3,11 +3,11 @@ import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import Placeholder from './Placeholder.astro';
 import { SITE, waLink } from '../config/site';
-import heroImg from '../assets/images/predio-verde.png';
+import heroImg from '../assets/images/pool.jpg';
 
 const trust = [
   { icon: 'award', label: '42 años de trayectoria' },
-  { icon: 'shield', label: 'Predio propio y exclusivo' },
+  { icon: 'shield', label: 'Predio exclusivo' },
   { icon: 'stethoscope', label: 'Servicio médico permanente' },
   { icon: 'waves', label: '3 piletas con guardavidas' },
 ] as const;
@@ -17,13 +17,13 @@ const trust = [
   <div class="hero__media">
     <Image
       src={heroImg}
-      widths={[480, heroImg.width]}
-      sizes="100vw"
+      widths={[640, 1280, 1920, heroImg.width]}
+      sizes="(max-aspect-ratio: 3/2) 150vh, 100vw"
       quality={80}
       loading="eager"
       fetchpriority="high"
       decoding="async"
-      alt="Cancha de pasto del predio de Sprint Colonia, rodeada de árboles y con juegos para chicos al fondo"
+      alt="Vista aérea de una pileta con chicos nadando, reposeras rojas y una sombrilla a rayas en el borde"
       class="hero__img"
     />
     {
@@ -42,7 +42,7 @@ const trust = [
       <span class="hero__headline">42 años cuidando el verano de tus hijos</span>
     </h1>
     <p class="hero__sub">
-      Un predio propio, seguro y a un paso de tu casa, en Núñez{' '}
+      Un predio exclusivo, seguro y a un paso de tu casa, en Núñez{' '}
       {SITE.address.street ? `(${SITE.address.street})` : <Placeholder />}.
     </p>
     <div class="hero__ctas">

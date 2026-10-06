@@ -9,7 +9,7 @@ import { NAV_LINKS, SITE, waLink } from '../config/site';
   <div class="container footer__grid">
     <div class="footer__brand">
       <Logo variant="dark" />
-      <p>42 años cuidando el verano de los chicos en un predio propio, seguro y exclusivo, en Núñez.</p>
+      <p>42 años cuidando el verano de los chicos en un predio exclusivo y seguro, en Núñez.</p>
       <ul class="social" role="list">
         <li>
           <a href={SITE.social.instagram} target="_blank" rel="noopener" aria-label="Instagram de Sprint Colonia">
@@ -47,10 +47,17 @@ import { NAV_LINKS, SITE, waLink } from '../config/site';
       <ul role="list" class="contact-list">
         <li>
           <Icon name="whatsapp" size={18} />
-          <a href={waLink()} target="_blank" rel="noopener">
-            {SITE.whatsappNumber ? `+${SITE.whatsappNumber}` : 'WhatsApp'}
-          </a>
-          {!SITE.whatsappNumber && <Placeholder label="número" />}
+          <a href={waLink()} target="_blank" rel="noopener">{SITE.whatsappDisplay}</a>
+          <span aria-hidden="true">·</span>
+          <a href={waLink(undefined, SITE.whatsappAlt.number)} target="_blank" rel="noopener">{SITE.whatsappAlt.display}</a>
+        </li>
+        <li>
+          <Icon name="phone" size={18} />
+          <a href={`tel:${SITE.phone.number}`}>{SITE.phone.display}</a>
+        </li>
+        <li>
+          <Icon name="mail" size={18} />
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
         </li>
         <li>
           <Icon name="map-pin" size={18} />

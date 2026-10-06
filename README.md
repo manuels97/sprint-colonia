@@ -28,13 +28,13 @@ Todo dato no confirmado aparece en el sitio como una etiqueta punteada **CONFIRM
 | # | Dato | Dónde se cambia | Notas |
 |---|------|-----------------|-------|
 | 1 | **Dirección exacta del predio** | `SITE.address.street` | El cliente dice "Núñez, a un paso de todo". El sitio viejo (sprintgroup.com.ar/colonia) decía *Club Atlético Platense, Zufrategui 2021, Vicente López*. No se asumió ninguna. Cuando se complete, el placeholder desaparece del hero, de la sección Ubicación y del footer, el mapa se centra en la dirección y se agrega al JSON-LD. |
-| 2 | **WhatsApp / teléfono público** | `SITE.whatsappNumber` | Formato internacional sin `+` ni espacios. El número que pasó el cliente es **+54 9 11 4470-0114** (`5491144700114`), pero puede ser personal de quien escribió: confirmar antes de usarlo. Mientras el campo esté vacío, los botones abren WhatsApp con el mensaje precargado y sin destinatario. |
+| 2 | ~~WhatsApp / teléfono público~~ | `SITE.whatsappNumber`, `whatsappAlt`, `phone`, `email` | Confirmado: WhatsApp A 11-4470-0114 (destino de los botones), WhatsApp B 11-6365-2222, fijo 11-4781-7675, coloniasprint@gmail.com. |
 | 3 | **Nombre comercial final** | `SITE.name` | "Sprint Colonia" es el nombre de trabajo (Instagram histórico @coloniasprint, Facebook /sprintcolonia). |
 | 4 | **Dominio** | `SITE.url`, `astro.config.mjs` (`site`) y `public/robots.txt` | Se usa `https://sprintcolonia.com.ar` como placeholder. Afecta canonical, Open Graph y sitemap. |
 | 5 | **Redes sociales vigentes** | `SITE.social` | Se usaron las cuentas históricas. |
 | 6 | **Logo** | `src/assets/logo.png` | Logo oficial que pasó el cliente (134×85, recortado). En el footer va sobre una placa blanca. Si hay una versión en mayor resolución o en SVG, reemplazar el archivo. |
 | 7 | **Actividades vigentes** | `src/components/Actividades.astro` | Son las categorías históricas de la marca. |
-| 8 | **Convenios con colegios/empresas** | `src/components/Contacto.astro` | Se dejó el bloque con placeholder hasta tener el listado. |
+| 8 | ~~Colegios y empresas con descuento~~ | `src/components/Contacto.astro` | Cargado el listado "Colonia 2027". |
 | 9 | **Horarios de cada turno** | `src/components/Horarios.astro` | No se publicaron horarios porque no hay datos. |
 | 10 | **Precios de packs** | `src/components/Horarios.astro` | Hoy dicen "Consultar" (no se inventaron cifras). |
 | 11 | **Video del predio** | `SITE.video` / `SITE.heroVideo` | Ver la sección "Video". |
