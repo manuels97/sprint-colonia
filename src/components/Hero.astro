@@ -1,9 +1,8 @@
 ---
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
-import Placeholder from './Placeholder.astro';
 import { SITE, waLink } from '../config/site';
-import heroImg from '../assets/images/pool.jpg';
+import heroImg from '../assets/images/pool2.jpg';
 
 const trust = [
   { icon: 'award', label: '42 años de trayectoria' },
@@ -23,7 +22,7 @@ const trust = [
       loading="eager"
       fetchpriority="high"
       decoding="async"
-      alt="Vista aérea de una pileta con chicos nadando, reposeras rojas y una sombrilla a rayas en el borde"
+      alt="Vista aérea de una pileta con muchos chicos jugando en el agua y reposeras de colores en el borde"
       class="hero__img"
     />
     {
@@ -38,12 +37,11 @@ const trust = [
 
   <div class="container hero__content">
     <h1 id="hero-title" class="hero__title">
-      <span class="hero__kicker">Sprint Colonia · Colonia de verano en Núñez</span>
-      <span class="hero__headline">42 años cuidando el verano de tus hijos</span>
+      <span class="hero__kicker">Colonia de verano en Núñez</span>
+      <span class="hero__headline">42 años compartiendo aventuras, juegos y amigos.</span>
     </h1>
     <p class="hero__sub">
-      Un predio exclusivo, seguro y a un paso de tu casa, en Núñez{' '}
-      {SITE.address.street ? `(${SITE.address.street})` : <Placeholder />}.
+      Un predio exclusivo, seguro, con mucho verde y a un paso de tu casa.
     </p>
     <div class="hero__ctas">
       <a class="btn btn--sun btn--lg" href={waLink()} target="_blank" rel="noopener">

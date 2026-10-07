@@ -9,7 +9,7 @@ import { NAV_LINKS, SITE, waLink } from '../config/site';
   <div class="container footer__grid">
     <div class="footer__brand">
       <Logo variant="dark" />
-      <p>42 años cuidando el verano de los chicos en un predio exclusivo y seguro, en Núñez.</p>
+      <p>42 años compartiendo aventuras, juegos y amigos en un predio exclusivo, seguro y con mucho verde, en Núñez.</p>
       <ul class="social" role="list">
         <li>
           <a href={SITE.social.instagram} target="_blank" rel="noopener" aria-label="Instagram de Sprint Colonia">
@@ -62,7 +62,7 @@ import { NAV_LINKS, SITE, waLink } from '../config/site';
         <li>
           <Icon name="map-pin" size={18} />
           <span>
-            {SITE.address.street ?? `${SITE.address.locality}, ${SITE.address.region}`}
+            {SITE.address.street ? `${SITE.address.street}, ${SITE.address.locality}, ${SITE.address.region}` : `${SITE.address.locality}, ${SITE.address.region}`}
           </span>
           {!SITE.address.street && <Placeholder label="dirección" />}
         </li>

@@ -11,7 +11,7 @@ export const SITE = {
 
   metaTitle: 'Sprint Colonia | Colonia de Verano en Núñez, CABA',
   metaDescription:
-    'Sprint Colonia: 42 años cuidando el verano de tus hijos en Núñez. Predio exclusivo y seguro, 3 piletas, servicio médico y transporte puerta a puerta.',
+    'Sprint Colonia: 42 años compartiendo aventuras, juegos y amigos en Núñez. Predio exclusivo, seguro y con mucho verde, 3 piletas, servicio médico y transporte puerta a puerta.',
 
   /**
    * WhatsApp principal (línea A), formato internacional sin "+" ni espacios.
@@ -26,15 +26,17 @@ export const SITE = {
   email: 'coloniasprint@gmail.com',
   whatsappMessage: 'Hola, quiero más info sobre Sprint Colonia',
 
-  /** [CONFIRMAR] Dirección exacta del predio. `street: null` muestra el placeholder. */
+  /** Dirección del predio. `street: null` muestra el placeholder. */
   address: {
-    street: null as string | null,
+    street: 'Club Centro Naval, Colectora Cantilo 2001' as string | null,
     locality: 'Núñez',
     region: 'CABA',
     country: 'AR',
   },
-  /** Centro del mapa embebido hasta tener la dirección exacta. */
-  mapQuery: 'Núñez, Buenos Aires, Argentina',
+  /** Coordenadas del predio para el mapa embebido. */
+  mapQuery: '-34.53659912,-58.45577896',
+  /** Link a Google Maps (botón "Cómo llegar"). */
+  mapsUrl: 'https://maps.google.com/maps/search/Centro%20Naval%20Sede%20Nunez/@-34.53659912,-58.45577896,17z?hl=es',
 
   /** Cuentas históricas de la marca — [CONFIRMAR] que sigan activas. */
   social: {

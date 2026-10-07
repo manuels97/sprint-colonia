@@ -1,6 +1,6 @@
 # Sprint Colonia — sitio web (demo)
 
-Landing one-pager de **Sprint Colonia**, la colonia de verano del grupo Sprint, en Núñez `[CONFIRMAR dirección]`. Está hecha en Astro con salida estática, cero frameworks de UI y JS mínimo.
+Landing one-pager de **Sprint Colonia**, la colonia de verano del grupo Sprint, en el Club Centro Naval (Colectora Cantilo 2001, Núñez). Está hecha en Astro con salida estática, cero frameworks de UI y JS mínimo.
 
 ## Cómo correrlo
 
@@ -27,7 +27,7 @@ Todo dato no confirmado aparece en el sitio como una etiqueta punteada **CONFIRM
 
 | # | Dato | Dónde se cambia | Notas |
 |---|------|-----------------|-------|
-| 1 | **Dirección exacta del predio** | `SITE.address.street` | El cliente dice "Núñez, a un paso de todo". El sitio viejo (sprintgroup.com.ar/colonia) decía *Club Atlético Platense, Zufrategui 2021, Vicente López*. No se asumió ninguna. Cuando se complete, el placeholder desaparece del hero, de la sección Ubicación y del footer, el mapa se centra en la dirección y se agrega al JSON-LD. |
+| 1 | ~~Dirección exacta del predio~~ | `SITE.address.street`, `mapQuery`, `mapsUrl` | Confirmado: Club Centro Naval, Colectora Cantilo 2001, Núñez, CABA. El mapa se centra en sus coordenadas y el botón "Cómo llegar" abre Google Maps. |
 | 2 | ~~WhatsApp / teléfono público~~ | `SITE.whatsappNumber`, `whatsappAlt`, `phone`, `email` | Confirmado: WhatsApp A 11-4470-0114 (destino de los botones), WhatsApp B 11-6365-2222, fijo 11-4781-7675, coloniasprint@gmail.com. |
 | 3 | **Nombre comercial final** | `SITE.name` | "Sprint Colonia" es el nombre de trabajo (Instagram histórico @coloniasprint, Facebook /sprintcolonia). |
 | 4 | **Dominio** | `SITE.url`, `astro.config.mjs` (`site`) y `public/robots.txt` | Se usa `https://sprintcolonia.com.ar` como placeholder. Afecta canonical, Open Graph y sitemap. |
