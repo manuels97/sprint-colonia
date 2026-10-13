@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
-import Placeholder from './Placeholder.astro';
 import { SITE } from '../config/site';
 import piletaJuego from '../assets/images/pileta-juego.png';
 import plazaJuegos from '../assets/images/plaza-juegos.png';
@@ -52,38 +51,29 @@ const hasVideo = Boolean(SITE.video.youtubeId || SITE.video.file);
       }
     </ul>
 
-    <!-- Video del predio: facade liviano, el embed recién se carga al hacer clic -->
-    <div class="video" data-reveal data-video data-youtube={SITE.video.youtubeId} data-file={SITE.video.file}>
-      <Image
-        src={canchaHockey}
-        alt=""
-        widths={[480, canchaHockey.width]}
-        sizes="(min-width: 1200px) 1200px, 100vw"
-        quality={75}
-        loading="lazy"
-        class="video__poster"
-      />
-      <div class="video__shade"></div>
-      {
-        hasVideo ? (
+    <!-- Video del predio: se muestra solo cuando hay uno cargado en SITE.video. Facade liviano: el embed recién se carga al hacer clic -->
+    {
+      hasVideo && (
+        <div class="video" data-reveal data-video data-youtube={SITE.video.youtubeId} data-file={SITE.video.file}>
+          <Image
+            src={canchaHockey}
+            alt=""
+            widths={[480, canchaHockey.width]}
+            sizes="(min-width: 1200px) 1200px, 100vw"
+            quality={75}
+            loading="lazy"
+            class="video__poster"
+          />
+          <div class="video__shade"></div>
           <button class="video__play" type="button" aria-label="Reproducir video del predio" data-video-play>
             <span class="video__btn">
               <Icon name="play" size={32} />
             </span>
             <span class="video__label">Recorré el predio en video</span>
           </button>
-        ) : (
-          <div class="video__play video__play--soon">
-            <span class="video__btn" aria-hidden="true">
-              <Icon name="play" size={32} />
-            </span>
-            <span class="video__label">
-              Video del predio — próximamente <Placeholder label="video" />
-            </span>
-          </div>
-        )
-      }
-    </div>
+        </div>
+      )
+    }
   </div>
 </section>
 
@@ -192,13 +182,11 @@ const hasVideo = Boolean(SITE.video.youtubeId || SITE.video.file);
     transition: transform 0.25s var(--ease-out);
   }
   button.video__play:hover .video__btn { transform: scale(1.08); }
-  .video__play--soon .video__btn { opacity: 0.85; }
   .video__label {
     font-weight: 800;
     font-size: 1.1rem;
     text-shadow: 0 1px 10px rgb(0 0 0 / 0.35);
   }
-  .video__label :global(.todo) { color: var(--color-sun); margin-left: 0.25rem; }
 </style>
 
 <script>

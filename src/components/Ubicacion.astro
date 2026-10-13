@@ -1,6 +1,5 @@
 ---
 import Icon from './Icon.astro';
-import Placeholder from './Placeholder.astro';
 import { SITE } from '../config/site';
 
 const barrios = ['Núñez', 'Belgrano', 'Vicente López', 'Olivos'];
@@ -22,15 +21,7 @@ const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(SITE.mapQuery
         <div>
           <p class="address__label">Dirección del predio</p>
           <p class="address__value">
-            {
-              SITE.address.street ? (
-                `${SITE.address.street}, ${SITE.address.locality}, ${SITE.address.region}`
-              ) : (
-                <>
-                  {SITE.address.locality}, {SITE.address.region} <Placeholder label="dirección" />
-                </>
-              )
-            }
+            {SITE.address.street ? `${SITE.address.street}, ${SITE.address.locality}, ${SITE.address.region}` : `${SITE.address.locality}, ${SITE.address.region}`}
           </p>
         </div>
       </div>
@@ -92,7 +83,6 @@ const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(SITE.mapQuery
     font-weight: 800;
     font-size: 1.1rem;
   }
-  .address__value :global(.todo) { color: #8A5A00; margin-left: 0.25rem; }
 
   .barrios {
     display: flex;

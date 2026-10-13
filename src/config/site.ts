@@ -1,12 +1,8 @@
-/**
- * Datos centrales del sitio. Todo lo marcado [CONFIRMAR] está pendiente de
- * validación con el cliente (ver README.md → "Datos pendientes").
- */
+/** Datos centrales del sitio. */
 export const SITE = {
-  /** [CONFIRMAR] Nombre comercial final. "Sprint Colonia" es el nombre de trabajo. */
   name: 'Sprint Colonia',
 
-  /** [CONFIRMAR] Dominio definitivo. Se usa para canonical, Open Graph y sitemap. */
+  /** Dominio. Se usa para canonical, Open Graph y sitemap. */
   url: 'https://sprintcolonia.com.ar',
 
   metaTitle: 'Sprint Colonia | Colonia de Verano en Núñez, CABA',
@@ -26,7 +22,7 @@ export const SITE = {
   email: 'coloniasprint@gmail.com',
   whatsappMessage: 'Hola, quiero más info sobre Sprint Colonia',
 
-  /** Dirección del predio. `street: null` muestra el placeholder. */
+  /** Dirección del predio. Con `street: null` se muestran solo barrio y ciudad. */
   address: {
     street: 'Club Centro Naval, Colectora Cantilo 2001' as string | null,
     locality: 'Núñez',
@@ -38,14 +34,15 @@ export const SITE = {
   /** Link a Google Maps (botón "Cómo llegar"). */
   mapsUrl: 'https://maps.google.com/maps/search/Centro%20Naval%20Sede%20Nunez/@-34.53659912,-58.45577896,17z?hl=es',
 
-  /** Cuentas históricas de la marca — [CONFIRMAR] que sigan activas. */
+  /** Redes sociales. */
   social: {
     instagram: 'https://www.instagram.com/coloniasprint/',
     facebook: 'https://www.facebook.com/sprintcolonia',
   },
 
   /**
-   * Video del predio. Completar UNO de los dos:
+   * Video del predio. Mientras ambos estén vacíos, el bloque de video no se muestra.
+   * Completar UNO de los dos:
    * - youtubeId: ID del video en YouTube (se carga recién al hacer clic).
    * - file: ruta a un .mp4 dentro de /public (ej: '/video/predio.mp4').
    */

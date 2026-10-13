@@ -277,22 +277,6 @@ p { text-wrap: pretty; }
   color: var(--color-night);
 }
 
-/* ---------- Placeholder [CONFIRMAR] ---------- */
-.todo {
-  display: inline-block;
-  padding: 0.05em 0.5em;
-  border: 1.5px dashed currentColor;
-  border-radius: 6px;
-  background: rgb(255 182 39 / 0.22);
-  font-family: var(--font-body);
-  font-size: 0.75em;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 1.5;
-  vertical-align: 0.1em;
-  white-space: nowrap;
-}
-
 /* ---------- Animaciones de scroll (solo con JS activo) ---------- */
 .js [data-reveal] {
   opacity: 0;

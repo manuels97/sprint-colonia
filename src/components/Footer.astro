@@ -1,7 +1,6 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import Placeholder from './Placeholder.astro';
 import { NAV_LINKS, SITE, waLink } from '../config/site';
 ---
 
@@ -64,7 +63,6 @@ import { NAV_LINKS, SITE, waLink } from '../config/site';
           <span>
             {SITE.address.street ? `${SITE.address.street}, ${SITE.address.locality}, ${SITE.address.region}` : `${SITE.address.locality}, ${SITE.address.region}`}
           </span>
-          {!SITE.address.street && <Placeholder label="dirección" />}
         </li>
         <li>
           <Icon name="instagram" size={18} />
@@ -143,7 +141,6 @@ import { NAV_LINKS, SITE, waLink } from '../config/site';
     gap: 0.5rem;
   }
   .contact-list :global(svg) { color: var(--color-sun); flex-shrink: 0; }
-  .contact-list :global(.todo) { color: var(--color-sun); }
 
   .footer__bottom {
     display: flex;
