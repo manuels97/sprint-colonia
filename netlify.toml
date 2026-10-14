@@ -4,3 +4,24 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Seguridad básica para todo el sitio (HTTPS/HSTS lo pone Netlify solo)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+# Imágenes, fuentes, CSS y JS de Astro llevan hash en el nombre → caché de 1 año
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Videos y pósters: no cambian seguido (si se reemplaza uno, cambiarle el nombre)
+[[headers]]
+  for = "/video/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"

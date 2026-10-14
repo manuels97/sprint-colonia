@@ -6,9 +6,11 @@ import { SITE, waLink } from '../config/site';
 interface Props {
   title?: string;
   description?: string;
+  /** Excluye la página de buscadores (ej: 404). */
+  noindex?: boolean;
 }
 
-const { title = SITE.metaTitle, description = SITE.metaDescription } = Astro.props;
+const { title = SITE.metaTitle, description = SITE.metaDescription, noindex = false } = Astro.props;
 
 const site = Astro.site ?? new URL(SITE.url);
 const canonical = new URL(Astro.url.pathname, site).href;
@@ -31,6 +33,12 @@ const jsonLd = {
     addressRegion: SITE.address.region,
     addressCountry: SITE.address.country,
   },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: Number(SITE.mapQuery.split(',')[0]),
+    longitude: Number(SITE.mapQuery.split(',')[1]),
+  },
+  hasMap: SITE.mapsUrl,
   telephone: SITE.phone.number,
   email: SITE.email,
   areaServed: ['Núñez', 'Belgrano', 'Vicente López', 'Olivos'].map((name) => ({
@@ -61,13 +69,15 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <meta name="theme-color" content="#1C6E96" />
     <meta name="generator" content={Astro.generator} />
 
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Fuentes: Google Fonts self-hosteadas por Astro (font-display: swap + preload) -->

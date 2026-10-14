@@ -1,0 +1,114 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import { waLink } from '../config/site';
+
+type Tone = 'sky' | 'grass' | 'sun';
+
+// Lo que tranquiliza a las familias (complementa la lista de Propuesta, sin repetirla).
+const razones: { icon: IconName; stat: string; title: string; text: string; tone: Tone }[] = [
+  {
+    icon: 'award',
+    stat: '42 años',
+    title: 'Experiencia que se nota',
+    text: 'Más de cuatro décadas organizando veranos nos enseñaron a cuidar cada momento del día, de la llegada a la vuelta a casa.',
+    tone: 'sun',
+  },
+  {
+    icon: 'shield',
+    stat: 'Todo el día',
+    title: 'Cuidados en cada momento',
+    text: 'Servicio médico y guardavidas permanentes, en un predio cerrado que es solo para la colonia.',
+    tone: 'sky',
+  },
+  {
+    icon: 'users',
+    stat: 'Por edades',
+    title: 'Profes que acompañan',
+    text: 'Profesores especializados y grupos armados por edad, para que cada chico tenga su lugar y su ritmo.',
+    tone: 'grass',
+  },
+  {
+    icon: 'alarm',
+    stat: '8:30 a 17:30',
+    title: 'Se adapta a tu familia',
+    text: 'Pre-hora desde las 8:30, turnos de mañana, tarde o completo, transporte puerta a puerta y packs flexibles.',
+    tone: 'sky',
+  },
+];
+---
+
+<section id="por-que" class="section section--sand" aria-labelledby="por-que-title">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow">Por qué nos eligen</p>
+      <h2 id="por-que-title" class="section-title">Ellos se divierten, la familia está tranquila</h2>
+      <p class="section-lead">
+        Las familias vuelven verano tras verano por lo mismo: confianza, cuidado y una organización pensada para su día a
+        día.
+      </p>
+    </div>
+
+    <ul class="razones" role="list">
+      {
+        razones.map((r, i) => (
+          <li class="razon" data-reveal style={`--reveal-delay: ${i * 80}ms`}>
+            <span class:list={['icon-tile', r.tone !== 'sky' && `icon-tile--${r.tone}`]}>
+              <Icon name={r.icon} />
+            </span>
+            <p class="razon__stat">{r.stat}</p>
+            <h3 class="razon__title">{r.title}</h3>
+            <p class="razon__text">{r.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="razones-cta" data-reveal>
+      <a class="btn btn--sky btn--lg" href={waLink('Hola, quiero conocer Sprint Colonia')} target="_blank" rel="noopener">
+        <Icon name="whatsapp" /> Hablá con nosotros
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .razones {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .razones { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1000px) {
+    .razones { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .razon {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem 1.5rem;
+    border-radius: var(--radius);
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+  }
+  .razon .icon-tile { margin-bottom: 1rem; }
+  .razon__stat {
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--color-sky-dark);
+  }
+  .razon__title {
+    margin: 0.35rem 0 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+  .razon__text { color: var(--color-text-muted); line-height: 1.6; }
+
+  .razones-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+  }
+</style>

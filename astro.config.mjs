@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // [CONFIRMAR] dominio definitivo (debe coincidir con SITE.url en src/config/site.ts y con public/robots.txt)
+  // Dominio definitivo (debe coincidir con SITE.url en src/config/site.ts y con public/robots.txt)
   site: 'https://sprintcolonia.com.ar',
   output: 'static',
   integrations: [sitemap()],

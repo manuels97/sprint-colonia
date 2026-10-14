@@ -70,7 +70,7 @@ export const NAV_LINKS = [
   { href: '#propuesta', label: 'Propuesta' },
   { href: '#actividades', label: 'Actividades' },
   { href: '#horarios', label: 'Horarios y Packs' },
-  { href: '#testimonios', label: 'Testimonios' },
+  { href: '#por-que', label: 'Por qué elegirnos' },
   { href: '#ubicacion', label: 'Ubicación' },
   { href: '#contacto', label: 'Contacto' },
 ];

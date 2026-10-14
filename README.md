@@ -1,4 +1,4 @@
-# Sprint Colonia — sitio web (demo)
+# Sprint Colonia — sitio web
 
 Landing one-pager de **Sprint Colonia**, la colonia de verano del grupo Sprint, en el Club Centro Naval (Colectora Cantilo 2001, Núñez). Está hecha en Astro con salida estática, cero frameworks de UI y JS mínimo.
 
@@ -21,29 +21,28 @@ npm run dev       # http://localhost:4321
 
 ---
 
-## ⚠️ Datos pendientes de confirmar con el cliente
+## Datos del negocio
 
-Todo dato no confirmado aparece en el sitio como una etiqueta punteada **CONFIRMAR**, para que no pase desapercibido. Casi todo se cambia en un solo archivo: [`src/config/site.ts`](src/config/site.ts).
+Casi todo se cambia en un solo archivo: [`src/config/site.ts`](src/config/site.ts).
 
-| # | Dato | Dónde se cambia | Notas |
-|---|------|-----------------|-------|
-| 1 | ~~Dirección exacta del predio~~ | `SITE.address.street`, `mapQuery`, `mapsUrl` | Confirmado: Club Centro Naval, Colectora Cantilo 2001, Núñez, CABA. El mapa se centra en sus coordenadas y el botón "Cómo llegar" abre Google Maps. |
-| 2 | ~~WhatsApp / teléfono público~~ | `SITE.whatsappNumber`, `whatsappAlt`, `phone`, `email` | Confirmado: WhatsApp A 11-4470-0114 (destino de los botones), WhatsApp B 11-6365-2222, fijo 11-4781-7675, coloniasprint@gmail.com. |
-| 3 | **Nombre comercial final** | `SITE.name` | "Sprint Colonia" es el nombre de trabajo (Instagram histórico @coloniasprint, Facebook /sprintcolonia). |
-| 4 | **Dominio** | `SITE.url`, `astro.config.mjs` (`site`) y `public/robots.txt` | Se usa `https://sprintcolonia.com.ar` como placeholder. Afecta canonical, Open Graph y sitemap. |
-| 5 | **Redes sociales vigentes** | `SITE.social` | Se usaron las cuentas históricas. |
-| 6 | **Logo** | `src/assets/logo.png` | Logo oficial que pasó el cliente (134×85, recortado). En el footer va sobre una placa blanca. Si hay una versión en mayor resolución o en SVG, reemplazar el archivo. |
-| 7 | **Actividades vigentes** | `src/components/Actividades.astro` | Son las categorías históricas de la marca. |
-| 8 | ~~Colegios y empresas con descuento~~ | `src/components/Contacto.astro` | Cargado el listado "Colonia 2027". |
-| 9 | **Horarios de cada turno** | `src/components/Horarios.astro` | No se publicaron horarios porque no hay datos. |
-| 10 | **Precios de packs** | `src/components/Horarios.astro` | Hoy dicen "Consultar" (no se inventaron cifras). |
-| 11 | **Video del predio** | `SITE.video` / `SITE.heroVideo` | Ver la sección "Video". |
+| Dato | Dónde se cambia | Valor actual |
+|------|-----------------|--------------|
+| Nombre | `SITE.name` | Sprint Colonia |
+| Dominio | `SITE.url`, `astro.config.mjs` (`site`) y `public/robots.txt` | `https://sprintcolonia.com.ar` (afecta canonical, Open Graph y sitemap) |
+| Dirección y mapa | `SITE.address`, `mapQuery`, `mapsUrl` | Club Centro Naval, Colectora Cantilo 2001, Núñez, CABA |
+| WhatsApp, teléfono y mail | `SITE.whatsappNumber`, `whatsappAlt`, `phone`, `email` | WhatsApp 11-4470-0114 (destino de los botones) y 11-6365-2222, fijo 11-4781-7675, coloniasprint@gmail.com |
+| Redes | `SITE.social` | Instagram @coloniasprint, Facebook /sprintcolonia |
+| Logo | `src/assets/logo.png` | 134×85. Si aparece una versión más grande o en SVG, reemplazar el archivo |
+| Actividades | `src/components/Actividades.astro` | |
+| Colegios y empresas con descuento | `src/components/Contacto.astro` | Listado "Colonia 2027" |
+| Horarios | `Horarios.astro`, `Propuesta.astro`, `PorQue.astro` | Completo 9:30–17:30, mañana 9:30–13:30, tarde 13:30–17:30, pre-hora desde las 8:30 |
+| Precios de packs | `src/components/Horarios.astro` | "Consultar" (se responden por WhatsApp) |
+| Video del predio | `SITE.video` / `SITE.heroVideo` | Sin video por ahora; ver la sección "Video" |
 
-### Contenido de ejemplo a reemplazar antes de producción
+### Contenido
 
-- **Fotos**: son fotos reales del predio que pasó el cliente (carpeta "colonia fotos"). Vienen en baja resolución (720–800 px de ancho), así que en pantallas grandes el hero se ve algo suave: si hay originales más grandes, reemplazarlos con el mismo nombre en `src/assets/images/` y Astro los reoptimiza solo.
-- **Testimonios**: son de ejemplo y el sitio lo aclara. Reemplazar en `src/components/Testimonios.astro` por reseñas reales con autorización de las familias.
-- **Aviso del footer**: "Sitio de demostración: los testimonios y los precios son ilustrativos." Quitarlo en `src/components/Footer.astro` cuando todo sea real.
+- **Fotos**: fotos reales del predio, en 720–800 px de ancho, así que en pantallas grandes el hero se ve algo suave. Si hay originales más grandes, reemplazarlos con el mismo nombre en `src/assets/images/` y Astro los reoptimiza solo.
+- **Por qué nos eligen** (`src/components/PorQue.astro`): armada solo con datos reales de la colonia. Si más adelante hay reseñas de familias, con su autorización, se pueden sumar ahí.
 - **Imagen para compartir** (`public/og-image.jpg`, 1200×630): es la que se ve al compartir el link por WhatsApp. Se generó a partir de `chicos-pileta.png`. Los favicons salen de `logo.png`.
 
 ---
@@ -56,6 +55,12 @@ Ninguno de los dos bloques de video bloquea el resto del sitio:
   - `SITE.video.youtubeId`: el ID de YouTube. Se embebe con `youtube-nocookie.com`.
   - `SITE.video.file`: un `.mp4` dentro de `public/`, por ejemplo `'/video/predio.mp4'`.
 - **Video de fondo del hero (opcional)**: `SITE.heroVideo = '/video/hero.mp4'`. Tiene que ser corto (5 a 10 s), sin audio y comprimido (menos de 2 MB). La foto queda como póster.
+- **Videos "Momentos"** (`public/video/momentos/`): están recomprimidos para la web (H.264, 720 px de alto, CRF 30, audio AAC 64 kbps, `+faststart`). Pasaron de 12 MB a 4,5 MB en total. Los originales quedan en `media-originales/`, que está en `.gitignore` y no se publica. Para sumar un clip nuevo:
+
+  ```bash
+  ffmpeg -i original.mp4 -vf "scale=-2:720,fps=30" -c:v libx264 -preset slow -crf 30 \
+    -maxrate 900k -bufsize 1800k -pix_fmt yuv420p -c:a aac -b:a 64k -movflags +faststart wspN.mp4
+  ```
 
 ---
 
@@ -75,22 +80,24 @@ src/
 │   ├── Actividades.astro
 │   ├── Horarios.astro   turnos, pre-hora y packs
 │   ├── Servicios.astro  transporte + servicio médico
-│   ├── Testimonios.astro
+│   ├── PorQue.astro     "Por qué nos eligen"
 │   ├── Ubicacion.astro  dirección + mapa embebido
 │   ├── Contacto.astro   WhatsApp, requisitos y formulario
 │   ├── Footer.astro
 │   ├── WhatsAppFloat.astro
 │   ├── Icon.astro       set único de íconos de línea
-│   ├── Logo.astro
-│   └── Placeholder.astro  etiqueta [CONFIRMAR]
+│   └── Logo.astro
 ├── config/site.ts       datos del negocio en un solo lugar
 ├── layouts/Layout.astro <head> SEO, Open Graph, JSON-LD, animaciones de scroll
 ├── pages/index.astro    arma todas las secciones
+├── pages/404.astro      página de error (noindex)
 └── styles/global.css    paleta (custom properties), base y utilidades
 public/
 ├── robots.txt
 ├── og-image.jpg
-└── favicon-32.png, favicon-192.png, apple-touch-icon.png
+├── site.webmanifest
+├── video/momentos/      clips comprimidos + pósters
+└── favicon.ico, favicon-32.png, favicon-192.png, apple-touch-icon.png
 ```
 
 ---
@@ -126,10 +133,14 @@ Igual, **antes de producción conviene subir a Astro 7.3+**, haciendo el build e
 
 ## Deploy
 
-A definir. El patrón de `SprintGimansio` (Netlify con deploy automático desde `main`) funciona tal cual:
+Netlify, con deploy automático desde `main`. `netlify.toml` ya define el build (`npm run build` → `dist`), cabeceras de seguridad y caché de 1 año para `/_astro/*` (los archivos llevan hash). Si se reemplaza un video de `public/video/`, cambiarle el nombre, porque se cachea 30 días.
 
-- Comando de build: `npm run build`
-- Carpeta a publicar: `dist`
+Después del primer deploy:
+
+1. En Netlify, cargar `sprintcolonia.com.ar` como dominio principal y `www` como alias (Netlify redirige solo y emite el certificado HTTPS).
+2. Dar de alta el sitio en [Google Search Console](https://search.google.com/search-console), verificar el dominio y enviar `https://sprintcolonia.com.ar/sitemap-index.xml`.
+3. Crear o reclamar el perfil de [Google Business Profile](https://business.google.com) con la misma dirección, teléfono y link al sitio. Para una colonia de barrio es lo que más pesa en las búsquedas locales ("colonia de verano Núñez").
+4. Probar los datos estructurados en [Rich Results Test](https://search.google.com/test/rich-results) y la vista previa al compartir por WhatsApp.
 
 ## Créditos
 

@@ -2,16 +2,18 @@
 import Icon, { type IconName } from './Icon.astro';
 import { waLink } from '../config/site';
 
-const turnos: { icon: IconName; title: string; text: string; tone: string; tag?: string }[] = [
+const turnos: { icon: IconName; title: string; text: string; hours: string; tone: string; tag?: string }[] = [
   {
     icon: 'sunrise',
     title: 'Turno mañana',
+    hours: '9:30 a 13:30',
     text: 'Medio día de pileta, deporte y juego, ideal para los que prefieren arrancar temprano.',
     tone: 'sky',
   },
   {
     icon: 'sun',
     title: 'Turno completo',
+    hours: '9:30 a 17:30',
     text: 'Toda la jornada en la colonia: actividades de mañana y de tarde, con la opción de sumar almuerzo y merienda en el predio.',
     tone: 'sun',
     tag: 'Almuerzo y merienda opcionales',
@@ -19,6 +21,7 @@ const turnos: { icon: IconName; title: string; text: string; tone: string; tag?:
   {
     icon: 'sunset',
     title: 'Turno tarde',
+    hours: '13:30 a 17:30',
     text: 'Medio día por la tarde, para combinar con la rutina de la familia sin perderse nada del verano.',
     tone: 'grass',
   },
@@ -49,6 +52,7 @@ const packs = [
               <Icon name={t.icon} />
             </span>
             <h3 class="turno__title">{t.title}</h3>
+            <p class="turno__hours"><Icon name="alarm" size={18} /> {t.hours} h</p>
             <p class="turno__text">{t.text}</p>
           </li>
         ))
@@ -59,7 +63,7 @@ const packs = [
       <span class="icon-tile icon-tile--grass"><Icon name="alarm" /></span>
       <div>
         <h3>Servicio de pre-hora</h3>
-        <p>¿Entrás temprano a trabajar? Podés dejar a los chicos antes del inicio del turno, con el mismo cuidado de siempre.</p>
+        <p>¿Entrás temprano a trabajar? Desde las <strong>8:30</strong> podés dejar a los chicos, antes del inicio del turno, con el mismo cuidado de siempre.</p>
       </div>
     </div>
 
@@ -121,6 +125,17 @@ const packs = [
     font-weight: 400;
     font-size: 2rem;
     letter-spacing: 0.02em;
+  }
+  .turno__hours {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    align-self: flex-start;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-sky-soft);
+    color: var(--color-sky-dark);
+    font-weight: 800;
   }
   .turno__text { color: var(--color-text-muted); }
 
